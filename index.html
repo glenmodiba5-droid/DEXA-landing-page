@@ -1,27 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1PZSWRG5SE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- ========================================== -->
+    <!-- 1. GOOGLE ANALYTICS TAG (Must be first)    -->
+    <!-- ========================================== -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1PZSWRG5SE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-1PZSWRG5SE');
-</script>
+      gtag('config', 'G-1PZSWRG5SE');
+    </script>
+    <!-- ========================================== -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DEXA - Digital Exchange Area</title>
+    <meta name="description" content="Africa's first 100% digital marketplace for creators. Sell e-books, templates, digital art, and audio with low fees and local payouts.">
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <!-- Lucide Icons CDN -->
-    <!-- FIX: Changed from lucide-react (for React projects) to lucide.min.js (for plain HTML) -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <!-- ========================================== -->
+    <!-- 2. SCHEMA MARKUP (For SEO & Robots)        -->
+    <!-- ========================================== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "DEXA",
+      "alternateName": "Digital Exchange Area",
+      "url": "https://glenmodiba5-droid.github.io/DEXA-landing-page/",
+      "logo": "https://glenmodiba5-droid.github.io/DEXA-landing-page/assets/logo.png",
+      "description": "Africa's first 100% digital marketplace for creators. Sell e-books, templates, and digital art with low fees.",
+      "foundingDate": "2025",
+      "areaServed": {
+        "@type": "Country",
+        "name": "South Africa"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/digital-exchange-area/?viewAsMember=true",
+        "https://www.tiktok.com/@digital_exchange_area?is_from_webapp=1&sender_device=pc",
+        "https://www.instagram.com/dexa.za?igsh=cWl4NzNY4Njl"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "glenmodiba@outlook.com"
+      }
+    }
+    </script>
+    <!-- ========================================== -->
     
     <style>
         body {
@@ -44,6 +83,41 @@
             height: 24px;
             stroke-width: 2;
         }
+        
+        /* Privacy Modal Styles */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 600px;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-visible .modal-content {
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900 antialiased">
@@ -52,11 +126,29 @@
     <header class="absolute top-0 left-0 w-full z-10 py-5 px-4 sm:px-6 lg:px-8">
         <nav class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center">
-                <!-- Your Logo Placeholder -->
-                <span class="text-3xl font-extrabold text-gray-900">DEXA</span>
+                <!-- LOGO INTEGRATION -->
+                <a href="#" class="flex items-center space-x-2">
+                    <!-- The New Icon (based on your logo) -->
+                    <svg class="stroke-emerald-600" width="34" height="32" viewBox="0 0 34 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M26 8L22 2H10C8.89543 2 8 2.89543 8 4V28C8 29.1046 8.89543 30 10 30H22L26 24V8Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 24V20L17 15L22 20V24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 13H4C2.89543 13 2 13.8954 2 15V17C2 18.1046 2.89543 19 4 19H8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="4" cy="13" r="2" fill="currentColor" stroke="white" stroke-width="1"/>
+                        <circle cx="4" cy="19" r="2" fill="currentColor" stroke="white" stroke-width="1"/>
+                    </svg>
+                    <!-- The Text (based on your logo) -->
+                    <span class="text-3xl font-extrabold text-gray-900 tracking-tight">DEXA</span>
+                </a>
                 <span class="ml-2 mt-1 text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">BETA</span>
             </div>
-            <a href="#join" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">
+            <!-- TALLY INTEGRATION -->
+            <a href="#!" 
+               data-tally-open="w2qNyM" 
+               data-tally-layout="modal" 
+               data-tally-width="500"
+               data-tally-emoji-text="👋"
+               data-tally-emoji-animation="wave"
+               class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">
                 Become a Seller
             </a>
         </nav>
@@ -76,7 +168,14 @@
                         Sell your templates, e-books, art, music, and planners on DEXA. Built for the youth, freelancers, and digital hustlers of Africa.
                     </p>
                     <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="#join" class="w-full sm:w-auto cta-gradient text-white px-8 py-3.5 rounded-lg text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center">
+                        <!-- TALLY INTEGRATION -->
+                        <a href="#!" 
+                           data-tally-open="w2qNyM" 
+                           data-tally-layout="modal" 
+                           data-tally-width="500"
+                           data-tally-emoji-text="👋"
+                           data-tally-emoji-animation="wave"
+                           class="w-full sm:w-auto cta-gradient text-white px-8 py-3.5 rounded-lg text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center">
                             Start Selling Today
                             <svg class="lucide-icon ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </a>
@@ -127,7 +226,7 @@
                         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-pink-100 transition-colors">
                             <i data-lucide="book-open" class="lucide-icon text-pink-600"></i>
                         </div>
-                        <h3 classs="mt-4 text-lg font-semibold text-gray-900">E-books</h3>
+                        <h3 class="mt-4 text-lg font-semibold text-gray-900">E-books</h3>
                         <p class="mt-1 text-sm text-gray-600">Study Guides, Poetry, Storytelling, How-To's</p>
                     </div>
                     <!-- Category 3: Digital Art -->
@@ -180,7 +279,7 @@
                             </div>
                         </div>
                         <div class="mt-4">
-                            <h3 class_ ="text-xl font-semibold text-gray-900">Keep More of Your Money</h3>
+                            <h3 class="text-xl font-semibold text-gray-900">Keep More of Your Money</h3>
                             <p class="mt-2 text-base text-gray-600">
                                 Our competitive <strong class="text-gray-900">12% commission</strong> is one of the lowest out there. No listing fees, no hidden charges.
                             </p>
@@ -198,7 +297,7 @@
                             <h3 class="text-xl font-semibold text-gray-900">Get Noticed</h3>
                             <p class="mt-2 text-base text-gray-600">
                                 Buy a spot on our <strong class="text-gray-900">Homepage Billboard</strong> or boost your listing to get your products in front of more buyers.
-                            </D>
+                            </p>
                         </div>
                     </div>
 
@@ -234,18 +333,20 @@
                     We're launching soon and looking for our first 20 creators to help test the platform. Get featured, pay no commission for 3 months, and help shape the future of DEXA.
                 </p>
                 
-                <!-- This is a placeholder form. You can replace this with an embedded form from Mailchimp, Tally, etc. -->
-                <form action="#" method="POST" class="mt-10 max-w-lg mx-auto">
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <label for="email-address" class="sr-only">Email address</label>
-                        <input id="email-address" name="email" type="email" autocomplete="email" required class="flex-auto w-full px-5 py-3.5 rounded-lg border-white text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-700" placeholder="Enter your email">
-                        
-                        <button type="submit" class="w-full sm:w-auto flex-none bg-gray-900 text-white px-6 py-3.5 rounded-lg text-base font-semibold shadow-md hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 focus:ring-offset-emerald-700">
-                            Join the Waitlist
-                        </button>
-                    </div>
+                <!-- TALLY INTEGRATION -->
+                <div class="mt-10 max-w-lg mx-auto">
+                    <button 
+                        type="button"
+                        data-tally-open="w2qNyM" 
+                        data-tally-layout="modal" 
+                        data-tally-width="500"
+                        data-tally-emoji-text="👋"
+                        data-tally-emoji-animation="wave"
+                        class="w-full sm:w-auto flex-none bg-gray-900 text-white px-6 py-3.5 rounded-lg text-base font-semibold shadow-md hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 focus:ring-offset-emerald-700">
+                        Join the Waitlist
+                    </button>
                     <p class="mt-3 text-sm text-emerald-100">We respect your privacy. No spam.</p>
-                </form>
+                </div>
             </div>
         </section>
 
@@ -257,16 +358,79 @@
             <p class="text-base">
                 &copy; 2025 DEXA: Digital Exchange Area. All rights reserved.
             </p>
-            <p class="mt-2 text-sm">
-                Built for the creators of Africa.
-            </p>
+            <div class="mt-4 flex justify-center space-x-4 text-sm">
+                <a href="#!" id="privacy-link" class="hover:text-white transition-colors">Privacy Policy</a>
+                <span>|</span>
+                <p>Built for the creators of Africa.</p>
+            </div>
         </div>
     </footer>
+
+    <!-- TALLY SCRIPT -->
+    <script async src="https://tally.so/widgets/embed.js"></script>
 
     <!-- Script to initialize Lucide icons -->
     <script>
       lucide.createIcons();
     </script>
+
+    <!-- Privacy Policy Modal (Hidden by default) -->
+    <div id="privacy-modal" class="modal-backdrop">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-slate-800">Privacy Policy</h3>
+                <button id="privacy-modal-close" class="text-gray-500 hover:text-gray-800">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="prose prose-slate max-w-none text-slate-600 space-y-4">
+                <p>Welcome to DEXA! We respect your privacy. This policy explains what information we collect for our pre-launch waitlist and how we use it.</p>
+                
+                <h4 class="font-semibold text-slate-700">What We Collect</h4>
+                <p>For our waitlist, we only collect one piece of information: your email address.</p>
+                
+                <h4 class="font-semibold text-slate-700">How We Collect It</h4>
+                <p>We use a third-party service called Tally to securely collect and store email addresses for our waitlist. When you sign up, you are providing your information directly to Tally, which they manage on our behalf.</p>
+                <p>You can view their official privacy policy here: <a href="https://tally.so/help/privacy-policy" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline">Tally Privacy Policy</a>.</p>
+                
+                <h4 class="font-semibold text-slate-700">How We Use It</h4>
+                <p>We will only use your email address for one purpose: to notify you when DEXA officially launches and to send you information about becoming one of our first creators.</p>
+                <p>We will never sell or share your email with other third parties.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Logic Script -->
+    <script>
+        // Privacy Modal Logic
+        const privacyLink = document.getElementById('privacy-link');
+        const privacyModal = document.getElementById('privacy-modal');
+        const privacyClose = document.getElementById('privacy-modal-close');
+
+        function toggleModal(show) {
+            if (show) {
+                privacyModal.classList.add('modal-visible');
+            } else {
+                privacyModal.classList.remove('modal-visible');
+            }
+        }
+
+        privacyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleModal(true);
+        });
+
+        privacyClose.addEventListener('click', () => {
+            toggleModal(false);
+        });
+
+        // Close modal when clicking outside the content box
+        privacyModal.addEventListener('click', (e) => {
+            if (e.target === privacyModal) {
+                toggleModal(false);
+            }
+        });
+    </script>
+
 </body>
 </html>
-
