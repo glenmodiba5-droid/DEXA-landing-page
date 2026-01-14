@@ -40,8 +40,8 @@
       "@type": "Organization",
       "name": "DEXA",
       "alternateName": "Digital Exchange Area",
-      "url": "https://glenmodiba5-droid.github.io/DEXA-landing-page/",
-      "logo": "https://glenmodiba5-droid.github.io/DEXA-landing-page/assets/logo.png",
+      "url": "https://www.dexamarket.co.za/",
+      "logo": "https://www.dexamarket.co.za/assets/logo.png",
       "description": "Africa's first 100% digital marketplace for creators. Sell e-books, templates, and digital art with low fees.",
       "foundingDate": "2025",
       "areaServed": {
@@ -49,14 +49,15 @@
         "name": "South Africa"
       },
       "sameAs": [
-        "https://www.linkedin.com/company/digital-exchange-area/?viewAsMember=true",
-        "https://www.tiktok.com/@digital_exchange_area?is_from_webapp=1&sender_device=pc",
-        "https://www.instagram.com/dexa.za?igsh=cWl4NzNY4Njl"
+        "https://www.linkedin.com/company/dexa-sa",
+        "https://www.tiktok.com/@dexa_sa",
+        "https://twitter.com/dexa_sa",
+        "https://www.instagram.com/dexa_sa"
       ],
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer support",
-        "email": "glenmodiba@outlook.com"
+        "email": "support@dexamarket.co.za"
       }
     }
     </script>
@@ -126,9 +127,8 @@
     <header class="absolute top-0 left-0 w-full z-10 py-5 px-4 sm:px-6 lg:px-8">
         <nav class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center">
-                <!-- LOGO INTEGRATION -->
+                <!-- LOGO INTEGRATION (Restored to SVG) -->
                 <a href="#" class="flex items-center space-x-2">
-                    <!-- The New Icon (based on your logo) -->
                     <svg class="stroke-emerald-600" width="34" height="32" viewBox="0 0 34 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M26 8L22 2H10C8.89543 2 8 2.89543 8 4V28C8 29.1046 8.89543 30 10 30H22L26 24V8Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M12 24V20L17 15L22 20V24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -136,21 +136,34 @@
                         <circle cx="4" cy="13" r="2" fill="currentColor" stroke="white" stroke-width="1"/>
                         <circle cx="4" cy="19" r="2" fill="currentColor" stroke="white" stroke-width="1"/>
                     </svg>
-                    <!-- The Text (based on your logo) -->
                     <span class="text-3xl font-extrabold text-gray-900 tracking-tight">DEXA</span>
                 </a>
                 <span class="ml-2 mt-1 text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">BETA</span>
             </div>
-            <!-- TALLY INTEGRATION -->
-            <a href="#!" 
-               data-tally-open="w2qNyM" 
-               data-tally-layout="modal" 
-               data-tally-width="500"
-               data-tally-emoji-text="👋"
-               data-tally-emoji-animation="wave"
-               class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">
-                Become a Seller
-            </a>
+            
+            <!-- NAVIGATION BUTTONS -->
+            <div class="flex items-center gap-4">
+                <!-- PARTNER BUTTON (NEW) -->
+                <!-- UPDATED WITH YOUR LINK: jaoW9J -->
+                <a href="#!" 
+                   data-tally-open="jaoW9J" 
+                   data-tally-layout="modal" 
+                   data-tally-width="500"
+                   class="hidden md:inline-block text-sm font-semibold text-gray-600 hover:text-emerald-600 transition-colors border border-gray-200 px-4 py-2 rounded-lg hover:border-emerald-600">
+                   Partner with Us
+                </a>
+
+                <!-- SELLER BUTTON -->
+                <a href="#!" 
+                   data-tally-open="w2qNyM" 
+                   data-tally-layout="modal" 
+                   data-tally-width="500"
+                   data-tally-emoji-text="👋"
+                   data-tally-emoji-animation="wave"
+                   class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">
+                    Become a Seller
+                </a>
+            </div>
         </nav>
     </header>
 
@@ -181,6 +194,16 @@
                         </a>
                         <a href="#features" class="w-full sm:w-auto bg-white text-gray-900 px-8 py-3.5 rounded-lg text-base font-semibold shadow-md hover:bg-gray-50 transition-colors border border-gray-200 flex items-center justify-center">
                             Learn More
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile-Only Partner Link (Visible on small screens) -->
+                    <div class="mt-6 md:hidden flex justify-center">
+                        <a href="#!" 
+                           data-tally-open="jaoW9J" 
+                           data-tally-layout="modal" 
+                           class="text-sm font-medium text-emerald-600 hover:text-emerald-800 underline">
+                           Looking to Partner? Apply here
                         </a>
                     </div>
                 </div>
@@ -360,6 +383,9 @@
             </p>
             <div class="mt-4 flex justify-center space-x-4 text-sm">
                 <a href="#!" id="privacy-link" class="hover:text-white transition-colors">Privacy Policy</a>
+                <span>|</span>
+                <!-- FOOTER PARTNER LINK -->
+                <a href="#!" data-tally-open="jaoW9J" data-tally-layout="modal" class="hover:text-white transition-colors font-medium text-emerald-400">Partner with Us</a>
                 <span>|</span>
                 <p>Built for the creators of Africa.</p>
             </div>
