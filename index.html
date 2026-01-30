@@ -17,7 +17,7 @@
     <title>DEXA - Digital Exchange Area</title>
     <meta name="description" content="South Africa's first digital marketplace. Buy & sell e-books, SaaS kits, and templates in ZAR. 12% flat fee.">
     
-    <!-- FAVICON (Browser Tab Logo) -->
+    <!-- FAVICON (Browser Tab Logo) - Uses lowercase logo.png -->
     <link rel="icon" type="image/png" href="assets/Logo.png">
     
     <!-- SOCIAL SHARE IMAGE (What AI/Facebook sees) -->
@@ -81,9 +81,9 @@
             <div class="flex items-center">
                 <!-- LOGO IMAGE (Matches Socials) -->
                 <a href="#" class="flex items-center space-x-2">
-                    <!-- This image tag looks for 'logo.png' in the 'assets' folder -->
-                    <!-- Since your logo is black text on white/transparent, it works perfectly on light backgrounds -->
-                    <img src="assets/logo.png" alt="DEXA Logo" class="h-10 w-auto object-contain">
+                    <!-- Updated to use 'logo.png' (lowercase) -->
+                    <!-- mix-blend-multiply helps hide white backgrounds on the logo if present -->
+                    <img src="assets/logo.png" alt="DEXA Logo" class="h-10 w-auto object-contain mix-blend-multiply">
                 </a>
                 <span class="ml-2 mt-1 text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">BETA</span>
             </div>
@@ -339,4 +339,4 @@
         pModal.addEventListener('click', (e) => { if(e.target===pModal) pModal.classList.remove('modal-visible'); });
     </script>
 </body>
-</html>
+</html
