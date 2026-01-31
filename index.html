@@ -76,11 +76,12 @@
                 <!-- LOGO IMAGE (Fixed Size & Background) -->
                 <a href="#" class="flex items-center space-x-2">
                     <!-- 
-                       1. 'h-28' makes it significantly bigger (112px height).
-                       2. 'mix-blend-multiply' magically removes white backgrounds if they exist.
-                       3. '?v=99' forces the browser to load the new file.
+                       UPDATED: 
+                       1. Removed 'mix-blend-multiply' (since image is transparent now).
+                       2. Increased size to 'h-24' (mobile) and 'md:h-32' (desktop). 
+                       3. '?v=100' to force refresh.
                     -->
-                    <img src="assets/dexa_logo_final.png?v=99" alt="DEXA Logo" class="h-28 w-auto object-contain mix-blend-multiply">
+                    <img src="assets/dexa_logo_final.png?v=100" alt="DEXA Logo" class="h-24 md:h-32 w-auto object-contain">
                 </a>
                 <span class="ml-2 mt-1 text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">BETA</span>
             </div>
