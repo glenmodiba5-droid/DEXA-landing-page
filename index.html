@@ -17,35 +17,29 @@
     <title>DEXA - Digital Exchange Area</title>
     <meta name="description" content="South Africa's first digital marketplace. Buy & sell e-books, SaaS kits, and templates in ZAR. 12% flat fee.">
     
-    <!-- FAVICON (Browser Tab Logo) - Uses new filename -->
-    <link rel="icon" type="image/png" href="assets/logo.png">
+    <!-- FAVICON (Browser Tab Logo) -->
+    <link rel="icon" type="image/png" href="assets/dexa_logo_final.png">
     
-    <!-- SOCIAL SHARE IMAGE (What AI/Facebook sees) -->
-    <meta property="og:image" content="https://www.dexamarket.co.za/assets/branding.png">
+    <!-- SOCIAL SHARE IMAGE -->
+    <meta property="og:image" content="https://www.dexamarket.co.za/assets/dexa_logo_final.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
-    <!-- SCHEMA MARKUP (For AI & Google) -->
+    <!-- SCHEMA MARKUP -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "HowTo",
-      "name": "How to become a seller on DEXA",
-      "step": [
-        {
-          "@type": "HowToStep",
-          "text": "Join the Waitlist to secure your spot as a Founding Seller."
-        },
-        {
-          "@type": "HowToStep",
-          "text": "Prepare your digital products (PDFs, Zips, Audio)."
-        },
-        {
-          "@type": "HowToStep",
-          "text": "Get your store link on Launch Day and start selling in ZAR."
-        }
+      "@type": "Organization",
+      "name": "DEXA",
+      "url": "https://www.dexamarket.co.za/",
+      "logo": "https://www.dexamarket.co.za/assets/dexa_logo_final.png",
+      "sameAs": [
+        "https://www.linkedin.com/company/dexa-sa",
+        "https://www.tiktok.com/@dexa_sa",
+        "https://twitter.com/dexa_sa",
+        "https://www.instagram.com/dexa_sa"
       ]
     }
     </script>
@@ -79,11 +73,14 @@
     <header class="absolute top-0 left-0 w-full z-10 py-5 px-4 sm:px-6 lg:px-8">
         <nav class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center">
-                <!-- LOGO IMAGE (Matches Socials) -->
+                <!-- LOGO IMAGE (Fixed Size & Background) -->
                 <a href="#" class="flex items-center space-x-2">
-                    <!-- Updated to use 'branding.png' to bypass caching issues -->
-                    <!-- Removed mix-blend-multiply so you see the image exactly as it is -->
-                    <img src="assets/branding.png" alt="DEXA Logo" class="h-12 w-auto object-contain">
+                    <!-- 
+                       1. 'h-20' makes it much bigger (80px height).
+                       2. 'mix-blend-multiply' magically removes white backgrounds if they exist.
+                       3. '?v=99' forces the browser to load the new file.
+                    -->
+                    <img src="assets/dexa_logo_final.png?v=99" alt="DEXA Logo" class="h-20 w-auto object-contain mix-blend-multiply">
                 </a>
                 <span class="ml-2 mt-1 text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">BETA</span>
             </div>
