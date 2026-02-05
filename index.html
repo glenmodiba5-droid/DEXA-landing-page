@@ -12,7 +12,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEXA - Digital Exchange Area</title>
+    <title>DEXA - Digital Exchange Area | Africa's Digital Marketplace</title>
     
     <!-- ASSETS -->
     <link rel="icon" type="image/png" href="assets/dexa_logo_final.png">
@@ -20,20 +20,256 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
-    <!-- UPLOADCARE WIDGET (The Magic Drag & Drop) -->
+    <!-- UPLOADCARE WIDGET CONFIG -->
     <script>
-        UPLOADCARE_PUBLIC_KEY = 'a6e07efb712d72d2451e'; // <--- PASTE KEY HERE
-        UPLOADCARE_TABS = 'file'; // Only allow local files
+        // REPLACE WITH YOUR ACTUAL KEY
+        UPLOADCARE_PUBLIC_KEY = 'YOUR_UPLOADCARE_PUBLIC_KEY'; 
+        UPLOADCARE_TABS = 'file';
+        UPLOADCARE_PREVIEW_STEP = true;
     </script>
     <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
-    <!-- FIREBASE SDK -->
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .hero-gradient { background: radial-gradient(circle at top right, #f0fdf4, #ffffff); }
+        .modal-backdrop {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center; z-index: 100;
+            opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-visible { opacity: 1; visibility: visible; }
+        /* Style the Uploadcare Button to match our theme */
+        .uploadcare--widget__button_type_open {
+            background: #10b981 !important; border: none !important; border-radius: 12px !important;
+            padding: 12px 24px !important; font-weight: 700 !important; color: white !important;
+            transition: all 0.2s ease !important;
+        }
+        .uploadcare--widget__button_type_open:hover {
+            background: #059669 !important; transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+    <!-- LANDING VIEW (The Marketing Page) -->
+    <div id="landing-view">
+        <!-- Navigation -->
+        <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+            <nav class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <img src="assets/dexa_logo_final.png" alt="DEXA" class="h-12 w-auto">
+                    <span class="hidden sm:block font-black text-xl tracking-tighter">DEXA</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="#partner" class="text-sm font-bold text-slate-600 hover:text-emerald-600 transition-colors">Partner</a>
+                    <button onclick="openAuth()" class="bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-slate-200 hover:scale-105 transition-transform active:scale-95">
+                        Seller Login
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-gradient pt-40 pb-24 px-4 overflow-hidden">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+                <div class="text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold mb-6">
+                        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
+                        BETA IS LIVE
+                    </div>
+                    <h1 class="text-5xl sm:text-7xl font-black text-slate-900 leading-[1.1] mb-8">
+                        The Digital Mall for <span class="text-emerald-600">Africa.</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-slate-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        Sell your SaaS kits, templates, e-books, and audio without the headache. Zero monthly fees. Direct ZAR payouts.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button onclick="openAuth()" class="bg-emerald-600 text-white px-10 py-5 rounded-2xl text-lg font-black shadow-xl shadow-emerald-100 hover:bg-emerald-700 hover:-translate-y-1 transition-all">
+                            Start Selling Today
+                        </button>
+                        <a href="#partner" class="bg-white text-slate-900 border border-slate-200 px-10 py-5 rounded-2xl text-lg font-bold hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
+                            Partner with Us
+                        </a>
+                    </div>
+                </div>
+                <div class="relative hidden lg:block">
+                    <div class="bg-white p-8 rounded-[40px] shadow-2xl border border-slate-100 rotate-2 relative z-10">
+                        <div class="h-64 bg-slate-50 rounded-3xl flex items-center justify-center mb-6 overflow-hidden">
+                            <i data-lucide="layout" class="w-16 h-16 text-slate-200"></i>
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-sm font-bold text-emerald-600 mb-1 uppercase tracking-widest">SaaS Template</p>
+                                <h3 class="text-2xl font-black text-slate-900 tracking-tight">DEXA Starter Kit</h3>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-3xl font-black text-slate-900">R350</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute top-10 -left-10 w-full h-full bg-emerald-100 rounded-[40px] -rotate-3 -z-0 opacity-50"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Categories -->
+        <section class="py-24 bg-white px-4">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mb-4">What can you sell on DEXA?</h2>
+                <p class="text-slate-500 font-medium mb-16">The marketplace built for your craft.</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:border-emerald-200 transition-colors group">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 transition-transform"><i data-lucide="code"></i></div>
+                        <h4 class="font-black text-xl mb-2 text-left">SaaS Kits</h4>
+                        <p class="text-sm text-slate-500 text-left leading-relaxed">Boilerplates, UI kits and components for developers.</p>
+                    </div>
+                    <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:border-emerald-200 transition-colors group">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 transition-transform"><i data-lucide="palette"></i></div>
+                        <h4 class="font-black text-xl mb-2 text-left">Templates</h4>
+                        <p class="text-sm text-slate-500 text-left leading-relaxed">Figma files, Notion setups, and presentation designs.</p>
+                    </div>
+                    <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:border-emerald-200 transition-colors group">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 transition-transform"><i data-lucide="book-open"></i></div>
+                        <h4 class="font-black text-xl mb-2 text-left">E-books</h4>
+                        <p class="text-sm text-slate-500 text-left leading-relaxed">PDF guides, case studies, and digital books.</p>
+                    </div>
+                    <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:border-emerald-200 transition-colors group">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 transition-transform"><i data-lucide="music"></i></div>
+                        <h4 class="font-black text-xl mb-2 text-left">Audio</h4>
+                        <p class="text-sm text-slate-500 text-left leading-relaxed">Beats, sound packs, loops and voiceover tracks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partnership -->
+        <section id="partner" class="py-24 bg-slate-900 text-white px-4 overflow-hidden relative">
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <h2 class="text-4xl font-black mb-6 leading-tight">Let's build the future of <span class="text-emerald-400 text-shadow-glow">African Digital Economy.</span></h2>
+                <p class="text-lg text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto">
+                    We're seeking creators and developers to help shape DEXA. Join as a founding partner for early access and zero commission for 12 months.
+                </p>
+                <button data-tally-open="jaoW9J" data-tally-layout="modal" class="bg-white text-slate-900 px-12 py-5 rounded-2xl text-xl font-black hover:scale-105 transition-all shadow-xl shadow-white/10">
+                    Apply for Partnership
+                </button>
+            </div>
+            <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <div class="absolute top-10 left-10 w-64 h-64 bg-emerald-500 rounded-full blur-[100px]"></div>
+                <div class="absolute bottom-10 right-10 w-64 h-64 bg-blue-500 rounded-full blur-[100px]"></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 bg-white border-t border-slate-100 px-4 text-center">
+            <div class="flex justify-center items-center gap-2 mb-6 opacity-80">
+                <img src="assets/dexa_logo_final.png" alt="DEXA" class="h-8">
+                <span class="font-black text-lg">DEXA</span>
+            </div>
+            <p class="text-slate-400 text-sm font-medium">© 2024 DEXA Marketplace. Built with ❤️ for Africa. 🇿🇦</p>
+        </footer>
+    </div>
+
+    <!-- DASHBOARD VIEW (Seller Interface) -->
+    <div id="dashboard-view" class="hidden min-h-screen bg-slate-50">
+        <header class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-20">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <img src="assets/dexa_logo_final.png" alt="DEXA" class="h-10">
+                    <span class="font-black text-lg tracking-tight">SELLER HUB</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <span id="user-email-display" class="hidden sm:block text-sm font-bold text-slate-500"></span>
+                    <button onclick="handleLogout()" class="text-sm font-black text-red-500 hover:text-red-700 transition-colors">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 py-10">
+            <div class="grid lg:grid-cols-3 gap-10">
+                <!-- Listing Form -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white p-10 rounded-[40px] shadow-sm border border-slate-100">
+                        <h2 class="text-2xl font-black mb-8">List a New Product</h2>
+                        <form id="upload-form" onsubmit="handleUpload(event)" class="space-y-8">
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div>
+                                    <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Product Name</label>
+                                    <input type="text" id="prod-title" required placeholder="e.g. Modern SaaS Boilerplate" class="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-emerald-500 text-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Price (ZAR)</label>
+                                    <input type="number" id="prod-price" required placeholder="0.00" class="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-emerald-500 text-lg font-bold">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Category</label>
+                                <select id="prod-category" class="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                                    <option>SaaS Kit</option>
+                                    <option>UI Template</option>
+                                    <option>E-book</option>
+                                    <option>Audio Pack</option>
+                                </select>
+                            </div>
+                            
+                            <div class="bg-emerald-50 p-8 rounded-3xl border-2 border-dashed border-emerald-200 text-center">
+                                <p class="text-emerald-900 font-black mb-4 uppercase tracking-widest text-sm">Drag & Drop Product File</p>
+                                <!-- Uploadcare Input -->
+                                <input type="hidden" role="uploadcare-uploader" name="my_file" />
+                                <p class="text-xs text-emerald-600 mt-4 font-bold">PDF, ZIP, or Audio files only. Max 100MB.</p>
+                            </div>
+
+                            <button type="submit" id="upload-btn" class="w-full bg-slate-900 text-white font-black py-5 rounded-2xl shadow-xl hover:scale-[1.01] transition-all">
+                                Publish Product
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Product List Sidebar -->
+                <div class="space-y-6">
+                    <div class="bg-white p-8 rounded-[40px] shadow-sm border border-slate-100">
+                        <h3 class="font-black text-xl mb-6">Your Active Listings</h3>
+                        <div id="product-list" class="space-y-4">
+                            <!-- Items load here via JS -->
+                            <div class="py-10 text-center text-slate-300">Loading products...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-modal" class="modal-backdrop">
+        <div class="bg-white p-10 rounded-[40px] shadow-2xl max-w-md w-full mx-4 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-emerald-500"></div>
+            <button onclick="closeAuth()" class="absolute top-6 right-6 text-slate-300 hover:text-slate-500 transition-colors"><i data-lucide="x"></i></button>
+            
+            <div class="text-center mb-8">
+                <img src="assets/dexa_logo_final.png" alt="Logo" class="h-16 mx-auto mb-4">
+                <h2 class="text-3xl font-black tracking-tight">Welcome to DEXA</h2>
+                <p class="text-slate-400 font-medium">Sign in to manage your digital shop</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <input type="email" id="email" placeholder="Email Address" required class="w-full p-4 bg-slate-50 rounded-2xl border-none font-bold">
+                <input type="password" id="password" placeholder="Password" required class="w-full p-4 bg-slate-50 rounded-2xl border-none font-bold">
+                <div class="grid grid-cols-2 gap-4 pt-4">
+                    <button type="submit" class="bg-slate-900 text-white font-black py-4 rounded-2xl shadow-lg hover:bg-slate-800 transition-all">Login</button>
+                    <button type="button" onclick="handleSignup()" class="bg-emerald-100 text-emerald-700 font-black py-4 rounded-2xl shadow-lg hover:bg-emerald-200 transition-all">Sign Up</button>
+                </div>
+            </form>
+            <p class="text-center text-[10px] text-slate-300 mt-8 font-black uppercase tracking-widest">Powered by DEXA Core 1.0</p>
+        </div>
+    </div>
+
+    <!-- 5. FIREBASE SCRIPT (At the end to ensure DOM availability) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- PASTE YOUR DEXA-LIVE KEYS HERE ---
         const firebaseConfig = {
             apiKey: "AIzaSyBtG5DaKJs20xDNi1U--7LyY_qPQFQkxR4",
             authDomain: "dexa-live.firebaseapp.com",
@@ -48,20 +284,29 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- APP LOGIC ---
-        
-        const authModal = document.getElementById('auth-modal');
-        const dashboardView = document.getElementById('dashboard-view');
-        const landingView = document.getElementById('landing-view');
-        const productList = document.getElementById('product-list');
-        const uploadBtn = document.getElementById('upload-btn');
+        // Define functions globally for HTML buttons to call
+        window.openAuth = () => {
+            const modal = document.getElementById('auth-modal');
+            if(modal) modal.classList.add('modal-visible');
+        };
+        window.closeAuth = () => {
+            const modal = document.getElementById('auth-modal');
+            if(modal) modal.classList.remove('modal-visible');
+        };
+        window.handleLogout = () => signOut(auth);
 
-        // Auth Listener
+        // Authentication state observer
         onAuthStateChanged(auth, (user) => {
+            const landingView = document.getElementById('landing-view');
+            const dashboardView = document.getElementById('dashboard-view');
+            const emailDisplay = document.getElementById('user-email-display');
+
+            if (!landingView || !dashboardView) return; // Safeguard for Script Error
+
             if (user) {
                 landingView.classList.add('hidden');
                 dashboardView.classList.remove('hidden');
-                document.getElementById('user-email-display').innerText = user.email;
+                if (emailDisplay) emailDisplay.innerText = user.email;
                 loadUserProducts(user.uid);
             } else {
                 landingView.classList.remove('hidden');
@@ -69,46 +314,45 @@
             }
         });
 
-        // Login/Signup Logic
+        // Form Handlers
         window.handleLogin = async (e) => {
             e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
             try {
-                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
-                authModal.classList.remove('modal-visible');
-            } catch (error) { alert("Login Failed: " + error.message); }
-        }
+                await signInWithEmailAndPassword(auth, email, password);
+                window.closeAuth();
+            } catch (error) { alert("Error: " + error.message); }
+        };
 
         window.handleSignup = async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
             try {
-                await createUserWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
-                alert("Account created! Welcome to DEXA.");
-                authModal.classList.remove('modal-visible');
-            } catch (error) { alert("Signup Failed: " + error.message); }
-        }
+                await createUserWithEmailAndPassword(auth, email, password);
+                window.closeAuth();
+            } catch (error) { alert("Error: " + error.message); }
+        };
 
-        window.handleLogout = () => signOut(auth);
-
-        // --- THE NEW UPLOAD LOGIC ---
-        // This listens for the Uploadcare widget to finish
-        const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+        // Upload Product Logic
         let uploadedFileUrl = null;
-
-        widget.onUploadComplete(function(info) {
-            console.log("File uploaded:", info.cdnUrl);
-            uploadedFileUrl = info.cdnUrl; // Save the URL from Uploadcare
-        });
+        
+        // Ensure widget is found
+        const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+        if (widget) {
+            widget.onUploadComplete(info => {
+                uploadedFileUrl = info.cdnUrl;
+            });
+        }
 
         window.handleUpload = async (e) => {
             e.preventDefault();
             const user = auth.currentUser;
+            const uploadBtn = document.getElementById('upload-btn');
+
             if (!user) return;
-
-            const title = document.getElementById('prod-title').value;
-            const price = document.getElementById('prod-price').value;
-            const category = document.getElementById('prod-category').value;
-
             if (!uploadedFileUrl) {
-                alert("Please upload a file first!");
+                alert("Please drag and drop a product file first!");
                 return;
             }
 
@@ -116,212 +360,63 @@
             uploadBtn.disabled = true;
 
             try {
-                // Save to Firestore (Database)
                 await addDoc(collection(db, "products"), {
-                    title: title,
-                    price: price,
-                    category: category,
-                    fileUrl: uploadedFileUrl, // Use the Uploadcare URL
+                    title: document.getElementById('prod-title').value,
+                    price: document.getElementById('prod-price').value,
+                    category: document.getElementById('prod-category').value,
+                    fileUrl: uploadedFileUrl,
                     sellerId: user.uid,
                     sellerEmail: user.email,
                     createdAt: new Date()
                 });
-
-                alert("Success! Product Listed.");
+                alert("Success! Your product is live.");
                 document.getElementById('upload-form').reset();
-                widget.value(null); // Reset widget
+                if(widget) widget.value(null);
                 uploadedFileUrl = null;
                 loadUserProducts(user.uid);
             } catch (error) {
-                console.error("Error adding document: ", error);
-                alert("Database Error: " + error.message);
+                alert("Error: " + error.message);
             } finally {
                 uploadBtn.innerText = "Publish Product";
                 uploadBtn.disabled = false;
             }
-        }
+        };
 
+        // Load Products
         async function loadUserProducts(userId) {
+            const productList = document.getElementById('product-list');
+            if (!productList) return;
+
             const q = query(collection(db, "products"), where("sellerId", "==", userId));
-            const querySnapshot = await getDocs(q);
-            productList.innerHTML = ""; 
-            
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                productList.innerHTML += `
-                    <div class="flex items-center justify-between bg-gray-50 p-4 rounded-xl border border-gray-100">
-                        <div>
-                            <h4 class="font-bold text-gray-900">${data.title}</h4>
-                            <p class="text-xs text-gray-500">${data.category} • R${data.price}</p>
+            try {
+                const querySnapshot = await getDocs(q);
+                productList.innerHTML = ""; 
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    productList.innerHTML += `
+                        <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all">
+                            <div>
+                                <h4 class="font-bold text-slate-900 leading-tight">${data.title}</h4>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mt-1">R${data.price} • ${data.category}</p>
+                            </div>
+                            <a href="${data.fileUrl}" target="_blank" class="p-2 bg-slate-50 text-slate-400 rounded-lg hover:text-emerald-600 hover:bg-emerald-50 transition-colors">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <a href="${data.fileUrl}" target="_blank" class="text-xs text-blue-600 hover:underline flex items-center gap-1"><i data-lucide="download" class="w-3 h-3"></i> Download</a>
-                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
-                        </div>
-                    </div>
-                `;
-            });
-            if (productList.innerHTML === "") productList.innerHTML = '<p class="text-sm text-gray-400 text-center">No products listed yet.</p>';
-            lucide.createIcons(); 
+                    `;
+                });
+                if (productList.innerHTML === "") {
+                    productList.innerHTML = '<div class="py-10 text-center text-slate-300 text-sm font-bold uppercase tracking-widest">No products yet</div>';
+                }
+                lucide.createIcons();
+            } catch (e) { console.error(e); }
         }
     </script>
 
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .hero-gradient { background: linear-gradient(120deg, #f0fdf4 0%, #fdf2f8 100%); }
-        .modal-backdrop {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6); display: flex;
-            align-items: center; justify-content: center; z-index: 100;
-            opacity: 0; visibility: hidden; transition: all 0.3s ease;
-        }
-        .modal-visible { opacity: 1; visibility: visible; }
-        
-        /* Uploadcare Widget Customization */
-        .uploadcare--widget__button_type_open {
-            background-color: #f3f4f6 !important;
-            color: #374151 !important;
-            border: 1px solid #d1d5db !important;
-            border-radius: 0.5rem !important;
-            padding: 10px 20px !important;
-            font-family: 'Inter', sans-serif !important;
-            font-weight: 600 !important;
-        }
-        .uploadcare--widget__button_type_open:hover {
-            background-color: #e5e7eb !important;
-        }
-    </style>
-</head>
-<body class="bg-white text-gray-900 antialiased">
-
-    <!-- LANDING VIEW -->
-    <div id="landing-view">
-        <header class="absolute top-0 left-0 w-full z-10 py-5 px-4 sm:px-6 lg:px-8">
-            <nav class="max-w-7xl mx-auto flex justify-between items-center">
-                <div class="flex items-center">
-                    <a href="#" class="flex items-center space-x-2">
-                        <img src="assets/dexa_logo_final.png?v=102" alt="DEXA Logo" class="h-24 md:h-32 w-auto object-contain">
-                    </a>
-                    <span class="ml-2 mt-1 text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">BETA</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <a href="#!" data-tally-open="jaoW9J" data-tally-layout="modal" class="hidden md:inline-block text-sm font-semibold text-gray-600 hover:text-emerald-600">Partner with Us</a>
-                    <button onclick="document.getElementById('auth-modal').classList.add('modal-visible')" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-800 transition-colors">
-                        Seller Login / Join
-                    </button>
-                </div>
-            </nav>
-        </header>
-
-        <main class="relative overflow-hidden">
-            <section class="hero-gradient pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-48 lg:pb-36">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div class="text-center lg:text-left">
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900">
-                            The Marketplace for <span class="block text-emerald-600">Africa's Digital Creators.</span>
-                        </h1>
-                        <p class="mt-6 text-lg sm:text-xl text-gray-700 max-w-lg mx-auto lg:mx-0">
-                            Sell your templates, e-books, SaaS kits, and audio on DEXA. No monthly fees. Direct ZAR payouts.
-                        </p>
-                        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <button onclick="document.getElementById('auth-modal').classList.add('modal-visible')" class="w-full sm:w-auto bg-emerald-600 text-white px-8 py-3.5 rounded-lg text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center">
-                                Start Selling Today
-                            </button>
-                        </div>
-                    </div>
-                    <div class="relative">
-                        <div class="bg-white p-4 rounded-2xl shadow-2xl transform rotate-3">
-                            <div class="aspect-w-16 aspect-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                                <span class="text-gray-400">Preview</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- DASHBOARD VIEW -->
-    <div id="dashboard-view" class="hidden min-h-screen bg-gray-50 pb-20">
-        <header class="bg-white shadow-sm py-4 px-6 sticky top-0 z-20">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <img src="assets/dexa_logo_final.png" alt="Logo" class="h-10">
-                    <span class="font-bold text-gray-900">Seller Hub</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <span id="user-email-display" class="text-sm text-gray-500 hidden sm:block"></span>
-                    <button onclick="handleLogout()" class="text-sm text-red-600 font-medium hover:underline">Logout</button>
-                </div>
-            </div>
-        </header>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- UPLOAD FORM -->
-                <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="text-lg font-bold text-gray-900 mb-4">List a New Product</h3>
-                    <form id="upload-form" onsubmit="handleUpload(event)" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Product Title</label>
-                            <input type="text" id="prod-title" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-2 border">
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Price (ZAR)</label>
-                                <input type="number" id="prod-price" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-2 border">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Category</label>
-                                <select id="prod-category" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-2 border">
-                                    <option>SaaS Kit</option>
-                                    <option>Template</option>
-                                    <option>E-book</option>
-                                    <option>Audio</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <!-- UPLOADCARE WIDGET HERE -->
-                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Upload File</label>
-                            <!-- The Widget Input -->
-                            <input type="hidden" role="uploadcare-uploader" name="my_file" data-public-key="YOUR_UPLOADCARE_PUBLIC_KEY" />
-                            <p class="text-xs text-gray-500 mt-2">Max size: 100MB. Securely stored via Uploadcare.</p>
-                        </div>
-
-                        <button type="submit" id="upload-btn" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700 transition-colors">
-                            Publish Product
-                        </button>
-                    </form>
-                </div>
-
-                <!-- PRODUCT LIST -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-fit">
-                    <h3 class="text-lg font-bold text-gray-900 mb-4">Your Listings</h3>
-                    <div id="product-list" class="space-y-3 max-h-96 overflow-y-auto">
-                        <p class="text-sm text-gray-400 text-center">Loading...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL -->
-    <div id="auth-modal" class="modal-backdrop">
-        <div class="modal-content text-center">
-            <div class="flex justify-end"><button onclick="document.getElementById('auth-modal').classList.remove('modal-visible')"><i data-lucide="x"></i></button></div>
-            <h2 class="text-2xl font-bold mb-6">Welcome to DEXA</h2>
-            <input type="email" id="email" placeholder="Email Address" class="w-full p-3 border rounded-lg mb-3">
-            <input type="password" id="password" placeholder="Password" class="w-full p-3 border rounded-lg mb-6">
-            <div class="flex gap-4">
-                <button onclick="handleLogin(event)" class="flex-1 bg-gray-900 text-white py-3 rounded-lg font-bold">Login</button>
-                <button onclick="handleSignup()" class="flex-1 bg-white border border-gray-300 text-gray-900 py-3 rounded-lg font-bold">Sign Up</button>
-            </div>
-        </div>
-    </div>
-
     <script async src="https://tally.so/widgets/embed.js"></script>
-    <script>lucide.createIcons();</script>
+    <script>
+        // Init icons on load
+        window.addEventListener('load', () => lucide.createIcons());
+    </script>
 </body>
 </html>
