@@ -12,7 +12,7 @@
 
     <!-- UPLOADCARE -->
     <script>
-        UPLOADCARE_PUBLIC_KEY = 'a6e07efb712d72d2451e'; // PASTE UPLOADCARE KEY
+        UPLOADCARE_PUBLIC_KEY = 'a6e07efb712d72d2451e'; 
         UPLOADCARE_TABS = 'file';
     </script>
     <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
@@ -47,10 +47,12 @@
                 <span class="text-xl md:text-2xl font-black tracking-tighter">DEXA</span>
             </div>
 
-            <!-- Desktop Nav -->
+            <!-- Desktop Nav (Dynamic) -->
             <div class="desktop-nav hidden items-center gap-6">
                 <button onclick="switchView('buyer')" class="text-sm font-bold text-slate-600 hover:text-[#177DFE]">Marketplace</button>
-                <div id="auth-buttons-desktop" class="flex gap-4"></div>
+                <div id="auth-buttons-desktop" class="flex gap-4">
+                    <!-- Javascript will inject Login/Logout buttons here -->
+                </div>
             </div>
 
             <!-- Mobile Toggle -->
@@ -78,7 +80,17 @@
             </div>
             <h2 class="text-2xl font-black text-[#091426] mb-6">Trending Now</h2>
             <div id="public-product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <p class="text-slate-400 text-sm col-span-full text-center py-10">Loading marketplace...</p>
+                <!-- Ghost Data -->
+                <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm opacity-50">
+                    <div class="h-32 bg-slate-50 rounded-2xl flex items-center justify-center mb-4"><i data-lucide="code" class="text-slate-300 w-10 h-10"></i></div>
+                    <h4 class="font-bold text-sm text-[#091426]">SaaS Starter Kit</h4>
+                    <p class="text-xs text-slate-400">By @SizweDev</p>
+                </div>
+                 <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm opacity-50">
+                    <div class="h-32 bg-slate-50 rounded-2xl flex items-center justify-center mb-4"><i data-lucide="music" class="text-slate-300 w-10 h-10"></i></div>
+                    <h4 class="font-bold text-sm text-[#091426]">Amapiano Pack</h4>
+                    <p class="text-xs text-slate-400">By @AudioKing</p>
+                </div>
             </div>
         </div>
 
@@ -109,9 +121,12 @@
                                 <input type="text" id="prod-title" placeholder="Product Title" class="w-full bg-slate-50 p-4 rounded-xl font-bold text-sm border-none focus:ring-2 focus:ring-[#177DFE]">
                                 <input type="number" id="prod-price" placeholder="Price (ZAR)" class="w-full bg-slate-50 p-4 rounded-xl font-bold text-sm border-none focus:ring-2 focus:ring-[#177DFE]">
                             </div>
+                            
+                            <!-- UPDATED: DESCRIPTION FIELD (Replaces Category Dropdown) -->
                             <div>
                                 <textarea id="prod-desc" rows="3" placeholder="Describe your product (What makes it special?)" class="w-full bg-slate-50 p-4 rounded-xl font-medium text-sm border-none focus:ring-2 focus:ring-[#177DFE]"></textarea>
                             </div>
+
                             <div class="p-6 border-2 border-dashed border-slate-200 rounded-xl flex justify-center bg-slate-50">
                                 <input type="hidden" role="uploadcare-uploader" name="my_file" />
                             </div>
@@ -129,6 +144,16 @@
             </div>
         </div>
 
+        <!-- FOOTER (Added Here) -->
+        <footer class="bg-white border-t border-slate-100 py-8 text-center mt-12 mb-20 md:mb-0">
+            <p class="text-slate-400 text-sm">© 2026 DEXA Marketplace. All rights reserved.</p>
+            <div class="mt-4 space-x-4 text-sm font-medium">
+                <a href="terms.html" class="text-slate-500 hover:text-[#177DFE] transition-colors">Terms & Conditions</a>
+                <span class="text-slate-300">|</span>
+                <a href="#!" data-tally-open="jaoW9J" data-tally-layout="modal" class="text-slate-500 hover:text-[#177DFE] transition-colors">Partner</a>
+            </div>
+        </footer>
+
         <!-- MOBILE NAV -->
         <nav class="md:hidden bg-white/90 backdrop-blur-md border-t border-slate-100 fixed bottom-0 w-full flex justify-around py-4 z-50">
             <button onclick="switchView('buyer')" class="flex flex-col items-center gap-1 text-[#177DFE]"><i data-lucide="shopping-bag" class="w-6 h-6"></i></button>
@@ -143,12 +168,14 @@
             <button onclick="toggleModal()" class="absolute top-4 right-4 text-slate-400"><i data-lucide="x"></i></button>
             <h2 id="modal-title" class="text-2xl font-black text-center mb-6">Login</h2>
             
+            <!-- Registration Fields (Hidden by default) -->
             <div id="signup-fields" class="hidden">
                 <input type="text" id="full-name" placeholder="Full Name" class="w-full bg-slate-50 p-4 rounded-xl mb-3 font-bold text-sm">
                 <input type="tel" id="phone" placeholder="Phone Number" class="w-full bg-slate-50 p-4 rounded-xl mb-3 font-bold text-sm">
                 <input type="text" id="shop-name" placeholder="Shop Name (e.g. Zulu Designs)" class="w-full bg-slate-50 p-4 rounded-xl mb-3 font-bold text-sm">
             </div>
             
+            <!-- Login Fields (Always visible) -->
             <input type="email" id="email" placeholder="Email" class="w-full bg-slate-50 p-4 rounded-xl mb-3 font-bold text-sm">
             <input type="password" id="password" placeholder="Password" class="w-full bg-slate-50 p-4 rounded-xl mb-6 font-bold text-sm">
             
@@ -161,8 +188,11 @@
         </div>
     </div>
 
+    <!-- LOGIC -->
     <script>
-        // CONFIG
+        // ==========================================
+        // 2. CONFIGURATION KEYS
+        // ==========================================
         var SUPABASE_URL = 'https://nnfsevthjkgmmjeuhstj.supabase.co'; // Paste URL
         var SUPABASE_KEY = 'sb_publishable_wQNaFDaJviFeZJOD9UZgPg_9AuhOt_P'; // Paste Anon Key
         var PAYSTACK_PUBLIC_KEY = 'pk_test_73823d1f12fd3d00d4634f58ebb6144ac7a9b0bd'; // Paste Paystack Key
@@ -189,7 +219,7 @@
                 document.getElementById('mode-text').innerText = 'Buyer';
                 loadPublicMarket();
             } else {
-                if (!isSupabaseReady) return alert("System needs keys!");
+                if (!isSupabaseReady) return alert("System needs keys to run!");
                 supabaseClient.auth.getUser().then(({ data: { user } }) => {
                     if (user) {
                         buyer.classList.add('hidden');
@@ -404,5 +434,6 @@
 
         window.onload = () => { loadPublicMarket(); lucide.createIcons(); };
     </script>
+    <script async src="https://tally.so/widgets/embed.js"></script>
 </body>
 </html>
