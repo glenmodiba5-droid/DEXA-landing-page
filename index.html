@@ -1,377 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ========================================== -->
-    <!-- 1. GOOGLE ANALYTICS TAG                    -->
-    <!-- ========================================== -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1PZSWRG5SE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-1PZSWRG5SE');
-    </script>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEXA - Digital Exchange Area</title>
-    <meta name="description" content="South Africa's first digital marketplace. Buy & sell e-books, SaaS kits, and templates in ZAR. 12% flat fee.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DEXA - Africa's Digital Marketplace</title>
     
-    <!-- FAVICON (Browser Tab Logo) -->
     <link rel="icon" type="image/png" href="assets/dexa_logo_final.png">
-    
-    <!-- SOCIAL SHARE IMAGE -->
-    <meta property="og:image" content="https://www.dexamarket.co.za/assets/dexa_logo_final.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
-    <!-- SCHEMA MARKUP -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "DEXA",
-      "url": "https://www.dexamarket.co.za/",
-      "logo": "https://www.dexamarket.co.za/assets/dexa_logo_final.png",
-      "sameAs": [
-        "https://www.linkedin.com/company/dexa-sa",
-        "https://www.tiktok.com/@dexa_sa",
-        "https://twitter.com/dexa_sa",
-        "https://www.instagram.com/dexa_sa"
-      ]
-    }
+    <!-- UPLOADCARE -->
+    <script>
+        UPLOADCARE_PUBLIC_KEY = 'a6e07efb712d72d2451e'; // PASTE UPLOADCARE KEY
+        UPLOADCARE_TABS = 'file';
     </script>
-    
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+    <!-- SUPABASE SDK -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+    <!-- PAYSTACK SDK -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .hero-gradient { background: linear-gradient(120deg, #f0fdf4 0%, #fdf2f8 100%); }
-        .cta-gradient { background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%); }
-        .cta-gradient:hover { background: linear-gradient(90deg, #059669 0%, #0891b2 100%); }
-        .lucide-icon { width: 24px; height: 24px; stroke-width: 2; }
-        
-        /* Privacy Modal Styles */
-        .modal-backdrop {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6); display: flex;
-            align-items: center; justify-content: center; z-index: 50;
-            opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .app-layout { max-width: 100%; min-height: 100vh; padding-bottom: 80px; }
+        @media (min-width: 768px) {
+            .app-layout { max-width: 1200px; margin: 0 auto; padding-bottom: 0; }
+            .mobile-nav { display: none !important; }
+            .desktop-nav { display: flex !important; }
         }
+        .modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.9); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; visibility: hidden; transition: 0.3s; }
         .modal-visible { opacity: 1; visibility: visible; }
-        .modal-content {
-            background-color: white; padding: 2rem; border-radius: 0.75rem;
-            width: 90%; max-width: 600px; transform: translateY(-20px);
-            transition: transform 0.3s ease; max-height: 80vh; overflow-y: auto;
-        }
-        .modal-visible .modal-content { transform: translateY(0); }
     </style>
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body class="text-slate-900">
 
-    <!-- Header -->
-    <header class="absolute top-0 left-0 w-full z-10 py-5 px-4 sm:px-6 lg:px-8">
-        <nav class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <!-- LOGO IMAGE (Fixed Size & Background) -->
-                <a href="#" class="flex items-center space-x-2">
-                    <!-- 
-                       UPDATED: 
-                       1. Removed 'mix-blend-multiply' (since image is transparent now).
-                       2. Increased size to 'h-24' (mobile) and 'md:h-32' (desktop). 
-                       3. '?v=100' to force refresh.
-                    -->
-                    <img src="assets/dexa_logo_final.png?v=100" alt="DEXA Logo" class="h-24 md:h-32 w-auto object-contain">
-                </a>
-                <span class="ml-2 mt-1 text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">BETA</span>
+    <div class="app-layout">
+        
+        <!-- HEADER -->
+        <header class="bg-white sticky top-0 z-20 border-b border-slate-100 px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
+            <div class="flex items-center gap-3">
+                <img src="assets/dexa_logo_final.png" class="h-8 md:h-10">
+                <span class="text-xl md:text-2xl font-black tracking-tighter">DEXA</span>
             </div>
-            
-            <div class="flex items-center gap-4">
-                <!-- PARTNER BUTTON -->
-                <a href="#!" data-tally-open="jaoW9J" data-tally-layout="modal" data-tally-width="500" class="hidden md:inline-block text-sm font-semibold text-gray-600 hover:text-emerald-600 transition-colors border border-gray-200 px-4 py-2 rounded-lg hover:border-emerald-600">
-                   Partner with Us
-                </a>
-                <!-- SELLER BUTTON -->
-                <a href="#!" data-tally-open="w2qNyM" data-tally-layout="modal" data-tally-width="500" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-800 transition-colors">
-                    Become a Seller
-                </a>
-            </div>
-        </nav>
-    </header>
 
-    <!-- Hero Section -->
-    <main class="relative overflow-hidden">
-        <section class="hero-gradient pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-48 lg:pb-36">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-center lg:text-left">
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900">
-                        The Marketplace for <span class="block text-emerald-600">Africa's Digital Creators.</span>
-                    </h1>
-                    <p class="mt-6 text-lg sm:text-xl text-gray-700 max-w-lg mx-auto lg:mx-0">
-                        Sell your templates, e-books, SaaS kits, and audio on DEXA. No monthly fees. Direct ZAR payouts.
-                    </p>
-                    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="#!" data-tally-open="w2qNyM" data-tally-layout="modal" class="w-full sm:w-auto cta-gradient text-white px-8 py-3.5 rounded-lg text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center">
-                            Start Selling Today
-                            <svg class="lucide-icon ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </a>
-                        <a href="#how-it-works" class="w-full sm:w-auto bg-white text-gray-900 px-8 py-3.5 rounded-lg text-base font-semibold shadow-md hover:bg-gray-50 transition-colors border border-gray-200 flex items-center justify-center">
-                            How it Works
-                        </a>
-                    </div>
-                    <!-- Mobile Partner Link -->
-                    <div class="mt-6 md:hidden flex justify-center">
-                        <a href="#!" data-tally-open="jaoW9J" data-tally-layout="modal" class="text-sm font-medium text-emerald-600 hover:text-emerald-800 underline">Looking to Partner? Apply here</a>
-                    </div>
-                </div>
-                
-                <div class="relative">
-                    <div class="bg-white p-4 rounded-2xl shadow-2xl transform rotate-3">
-                        <div class="aspect-w-16 aspect-h-10">
-                            <img src="https://placehold.co/600x400/10b981/ffffff?text=Your+Product+Here&font=inter" alt="Digital Product Example" class="rounded-lg object-cover">
-                        </div>
-                        <div class="mt-3 flex justify-between items-center">
-                            <div>
-                                <h3 class="font-semibold text-lg">SaaS Starter Kit</h3>
-                                <p class="text-sm text-gray-600">by @TechFounder</p>
-                            </div>
-                            <span class="font-bold text-xl text-emerald-600">R500</span>
-                        </div>
+            <!-- Desktop Nav -->
+            <div class="desktop-nav hidden items-center gap-6">
+                <button onclick="switchView('buyer')" class="text-sm font-bold text-slate-600 hover:text-[#177DFE]">Marketplace</button>
+                <div id="auth-buttons-desktop" class="flex gap-4"></div>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <div class="md:hidden" onclick="toggleAppMode()">
+                <div class="bg-slate-100 p-2 rounded-full flex items-center gap-2">
+                    <span id="mode-text" class="text-[10px] font-bold uppercase text-slate-500 pl-1">Buyer</span>
+                    <div id="mode-indicator" class="w-6 h-6 rounded-full bg-[#177DFE] flex items-center justify-center text-white">
+                        <i data-lucide="shopping-bag" class="w-3 h-3"></i>
                     </div>
                 </div>
             </div>
-        </section>
+        </header>
 
-        <!-- NEW SECTION: HOW IT WORKS (Info for AI & Users) -->
-        <section id="how-it-works" class="py-16 bg-white border-b border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-extrabold text-gray-900">How to Become a Seller</h2>
-                    <p class="mt-4 text-lg text-gray-600">Start your digital business in 3 simple steps.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Step 1 -->
-                    <div class="text-center">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold mb-4">1</div>
-                        <h3 class="text-xl font-bold text-gray-900">Join the Waitlist</h3>
-                        <p class="mt-2 text-gray-600">Secure your spot as a Founding Seller. Get 3 months commission-free.</p>
-                    </div>
-                    <!-- Step 2 -->
-                    <div class="text-center">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold mb-4">2</div>
-                        <h3 class="text-xl font-bold text-gray-900">Upload Your Products</h3>
-                        <p class="mt-2 text-gray-600">Prepare your PDFs, Zips, or Audio files. We handle the hosting and delivery.</p>
-                    </div>
-                    <!-- Step 3 -->
-                    <div class="text-center">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold mb-4">3</div>
-                        <h3 class="text-xl font-bold text-gray-900">Get Paid in ZAR</h3>
-                        <p class="mt-2 text-gray-600">Receive payouts directly to your South African bank account via Paystack/Yoco.</p>
+        <!-- BUYER VIEW -->
+        <div id="buyer-view" class="fade-in p-4 md:p-8">
+            <div class="relative overflow-hidden rounded-[32px] bg-[#091426] p-8 md:p-12 text-white shadow-2xl mb-12">
+                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="text-center md:text-left">
+                        <span class="bg-red-500 px-3 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 inline-block">Live Billboard</span>
+                        <h1 class="text-3xl md:text-5xl font-black mb-4 leading-tight">The Mzansi Stack</h1>
+                        <p class="text-slate-400 mb-6 max-w-md">Discover SaaS kits, templates, and audio packs built by Africa's top creators.</p>
+                        <button class="bg-white text-[#091426] px-6 py-3 rounded-xl font-bold text-sm hover:scale-105 transition-transform">Explore Now</button>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- CATEGORIES SECTION (Visual Cards Restored) -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-base font-semibold text-emerald-600 tracking-wide uppercase">What You Can Sell</h2>
-                    <p class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">
-                        From Prompts to Code
-                    </p>
-                </div>
-                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    
-                    <!-- 1. GOLDEN FEATURE: SaaS Kits -->
-                    <div class="relative group bg-slate-900 rounded-xl p-6 text-center transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-400/50">
-                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
-                            Golden Feature
-                        </div>
-                        <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-slate-700 transition-colors">
-                            <i data-lucide="code-2" class="lucide-icon text-yellow-400"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-white">SaaS Starter Kits</h3>
-                        <p class="mt-1 text-sm text-slate-400">Sell pre-built codebases (Next.js, Python) integrated with Paystack & Yoco. The "Mzansi Stack".</p>
-                    </div>
-
-                    <!-- 2. Templates -->
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-emerald-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-emerald-100 transition-colors">
-                            <i data-lucide="layout-template" class="lucide-icon text-emerald-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">Templates</h3>
-                        <p class="mt-1 text-sm text-gray-600">Notion, Canva, CVs, Webflow, Invoices</p>
-                    </div>
-
-                    <!-- 3. E-books -->
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-pink-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-pink-100 transition-colors">
-                            <i data-lucide="book-open" class="lucide-icon text-pink-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">E-books</h3>
-                        <p class="mt-1 text-sm text-gray-600">Study Guides, Poetry, Storytelling, How-To's</p>
-                    </div>
-
-                    <!-- 4. Digital Art -->
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-indigo-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-indigo-100 transition-colors">
-                            <i data-lucide="image" class="lucide-icon text-indigo-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">Digital Art</h3>
-                        <p class="mt-1 text-sm text-gray-600">Printable Posters, Wallpapers, Illustrations</p>
-                    </div>
-
-                    <!-- 5. Planners -->
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-cyan-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-cyan-100 transition-colors">
-                            <i data-lucide="calendar-check" class="lucide-icon text-cyan-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">Planners</h3>
-                        <p class="mt-1 text-sm text-gray-600">Budget Trackers, Year Planners, School Kits</p>
-                    </div>
-
-                    <!-- 6. Audio -->
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-amber-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-amber-100 transition-colors">
-                            <i data-lucide="music" class="lucide-icon text-amber-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">Audio</h3>
-                        <p class="mt-1 text-sm text-gray-600">Beats, Loops, Meditations, Podcasts</p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- FEATURES SECTION (With Billboard Info) -->
-        <section id="features" class="py-20 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="lg:text-center">
-                    <h2 class="text-base font-semibold text-emerald-600 tracking-wide uppercase">Why Choose DEXA?</h2>
-                    <p class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">Built for Exposure & Profit</p>
-                </div>
-
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-10">
-                    <!-- Feature 1: The Billboard -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
-                            <i data-lucide="monitor" class="lucide-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900">The 2-Hour Billboard</h3>
-                        <p class="mt-2 text-gray-600">
-                            We rotate 10 new creators on our homepage <strong>every 2 hours</strong>. Get featured in the spotlight for free, just by listing high-quality products.
-                        </p>
-                    </div>
-
-                    <!-- Feature 2: Low Fees -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
-                            <i data-lucide="percent" class="lucide-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900">12% Flat Fee</h3>
-                        <p class="mt-2 text-gray-600">
-                            Stop losing 30% to international platforms. We charge a simple 12% commission. No monthly fees. No hidden costs.
-                        </p>
-                    </div>
-
-                    <!-- Feature 3: SaaS Ready -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
-                            <i data-lucide="code-2" class="lucide-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900">SaaS Starter Kits</h3>
-                        <p class="mt-2 text-gray-600">
-                            Buy and sell "Mzansi-Ready" codebases with Paystack/Yoco and POPIA compliance pre-installed.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA -->
-        <section id="join" class="relative cta-gradient py-20 text-center text-white">
-            <div class="max-w-4xl mx-auto px-4">
-                <h2 class="text-3xl font-extrabold">Ready to secure your spot?</h2>
-                <p class="mt-4 text-lg text-emerald-100">Join the waitlist now for 3 months commission-free selling.</p>
-                <button type="button" data-tally-open="w2qNyM" data-tally-layout="modal" data-tally-width="500" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" class="mt-8 bg-gray-900 text-white px-8 py-4 rounded-lg text-lg font-bold shadow-lg hover:bg-gray-800 transition-transform transform hover:-translate-y-1">
-                    Join the Waitlist
-                </button>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p>&copy; 2025 DEXA. All rights reserved.</p>
-            <div class="mt-4 space-x-4 text-sm">
-                <a href="#!" id="privacy-link" class="hover:text-white">Privacy Policy</a>
-                <span>|</span>
-                <a href="#!" data-tally-open="jaoW9J" data-tally-layout="modal" class="hover:text-white text-emerald-400">Partner with Us</a>
+            <h2 class="text-2xl font-black text-[#091426] mb-6">Trending Now</h2>
+            <div id="public-product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <p class="text-slate-400 text-sm col-span-full text-center py-10">Loading marketplace...</p>
             </div>
         </div>
-    </footer>
 
-    <script async src="https://tally.so/widgets/embed.js"></script>
-    <script>lucide.createIcons();</script>
+        <!-- SELLER VIEW -->
+        <div id="seller-view" class="hidden fade-in p-4 md:p-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-black text-[#091426]">Seller Hub</h2>
+                    <span id="seller-shop-name" class="text-sm font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full"></span>
+                </div>
 
-    <!-- Privacy Policy Modal -->
-    <div id="privacy-modal" class="modal-backdrop">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6 border-b pb-4">
-                <h3 class="text-2xl font-bold text-gray-900">Privacy & Waitlist Terms</h3>
-                <button id="privacy-modal-close" class="text-gray-500 hover:text-black transition-colors">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Stats -->
+                    <div class="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm h-fit">
+                        <div class="flex items-center gap-3 mb-6 text-slate-400">
+                            <i data-lucide="wallet" class="w-6 h-6"></i>
+                            <span class="text-xs font-bold uppercase tracking-widest">Balance</span>
+                        </div>
+                        <h3 class="text-4xl font-black text-[#091426] mb-2">R 0.00</h3>
+                        <button class="w-full bg-[#177DFE] text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">Withdraw Funds</button>
+                    </div>
+
+                    <!-- Upload Form -->
+                    <div class="lg:col-span-2 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
+                        <h3 class="font-bold text-lg mb-6">Upload Product</h3>
+                        <form onsubmit="handleUpload(event)" class="space-y-4">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <input type="text" id="prod-title" placeholder="Product Title" class="w-full bg-slate-50 p-4 rounded-xl font-bold text-sm border-none focus:ring-2 focus:ring-[#177DFE]">
+                                <input type="number" id="prod-price" placeholder="Price (ZAR)" class="w-full bg-slate-50 p-4 rounded-xl font-bold text-sm border-none focus:ring-2 focus:ring-[#177DFE]">
+                            </div>
+                            <div>
+                                <textarea id="prod-desc" rows="3" placeholder="Describe your product (What makes it special?)" class="w-full bg-slate-50 p-4 rounded-xl font-medium text-sm border-none focus:ring-2 focus:ring-[#177DFE]"></textarea>
+                            </div>
+                            <div class="p-6 border-2 border-dashed border-slate-200 rounded-xl flex justify-center bg-slate-50">
+                                <input type="hidden" role="uploadcare-uploader" name="my_file" />
+                            </div>
+                            <button id="upload-btn" class="w-full bg-[#091426] text-white py-4 rounded-xl font-bold hover:bg-black transition-colors">Publish Product</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <h3 class="font-bold text-xl mb-6">Your Listings</h3>
+                    <div id="seller-list" class="space-y-3">
+                        <p class="text-slate-400 text-sm">No products yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE NAV -->
+        <nav class="md:hidden bg-white/90 backdrop-blur-md border-t border-slate-100 fixed bottom-0 w-full flex justify-around py-4 z-50">
+            <button onclick="switchView('buyer')" class="flex flex-col items-center gap-1 text-[#177DFE]"><i data-lucide="shopping-bag" class="w-6 h-6"></i></button>
+            <div class="relative -top-8"><button onclick="switchView('seller'); toggleModal()" class="w-14 h-14 bg-[#091426] rounded-full flex items-center justify-center text-white shadow-xl"><i data-lucide="plus" class="w-6 h-6"></i></button></div>
+            <button onclick="switchView('seller')" class="flex flex-col items-center gap-1 text-slate-400"><i data-lucide="user" class="w-6 h-6"></i></button>
+        </nav>
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-modal" class="modal-backdrop">
+        <div class="bg-white p-8 rounded-[32px] w-[90%] max-w-sm relative shadow-2xl overflow-y-auto max-h-[90vh]">
+            <button onclick="toggleModal()" class="absolute top-4 right-4 text-slate-400"><i data-lucide="x"></i></button>
+            <h2 id="modal-title" class="text-2xl font-black text-center mb-6">Login</h2>
+            
+            <div id="signup-fields" class="hidden">
+                <input type="text" id="full-name" placeholder="Full Name" class="w-full bg-slate-50 p-4 rounded-xl mb-3 font-bold text-sm">
+                <input type="tel" id="phone" placeholder="Phone Number" class="w-full bg-slate-50 p-4 rounded-xl mb-3 font-bold text-sm">
+                <input type="text" id="shop-name" placeholder="Shop Name (e.g. Zulu Designs)" class="w-full bg-slate-50 p-4 rounded-xl mb-3 font-bold text-sm">
             </div>
             
-            <div class="prose prose-sm prose-slate max-w-none text-gray-600 overflow-y-auto max-h-[60vh] pr-2">
-                
-                <h4 class="text-lg font-bold text-gray-900 mb-2">1. The "Founding Seller" Offer</h4>
-                <p class="mb-4">
-                    By joining the waitlist before our official public launch, you are eligible for the <strong>"Founding Seller"</strong> status. This grants you:
-                </p>
-                <ul class="list-disc pl-5 mb-4 space-y-1">
-                    <li><strong>3 Months Commission-Free Selling:</strong> DEXA will waive its standard 12% platform fee for 90 days starting from the day your seller account is activated.</li>
-                    <li><strong>Note on Banking Fees:</strong> While DEXA will not charge a fee, standard payment processing fees charged by our banking partners (Paystack/Yoco) may still apply to transactions.</li>
-                    <li><strong>Eligibility:</strong> This offer is exclusive to email addresses registered on our waitlist prior to Launch Day.</li>
-                </ul>
-
-                <hr class="my-6 border-gray-200">
-
-                <h4 class="text-lg font-bold text-gray-900 mb-2">2. Privacy Policy</h4>
-                <p class="mb-2"><strong>Data Collection:</strong> We collect your email address and name solely for the purpose of notifying you about the DEXA launch, onboarding you as a seller, and potential partnership opportunities.</p>
-                
-                <p class="mb-2"><strong>How We Use Data:</strong></p>
-                <ul class="list-disc pl-5 mb-4 space-y-1">
-                    <li>To send your "Founding Seller" invite.</li>
-                    <li>To communicate platform updates.</li>
-                    <li>We do <strong>not</strong> sell your data to third parties.</li>
-                </ul>
-
-                <p class="mb-2"><strong>Third-Party Services:</strong></p>
-                <ul class="list-disc pl-5 mb-4 space-y-1">
-                    <li><strong>Tally:</strong> We use Tally.so to securely collect your application forms.</li>
-                    <li><strong>Google Analytics:</strong> We use cookies to understand how visitors interact with our landing page to improve the experience.</li>
-                </ul>
-
-                <h4 class="text-lg font-bold text-gray-900 mb-2">3. Contact</h4>
-                <p>
-                    DEXA is proudly built in South Africa. If you have questions about your data or these terms, please contact the founder directly at: <a href="mailto:glenmodiba@outlook.com" class="text-emerald-600 hover:underline">glenmodiba@outlook.com</a>
-                </p>
-            </div>
+            <input type="email" id="email" placeholder="Email" class="w-full bg-slate-50 p-4 rounded-xl mb-3 font-bold text-sm">
+            <input type="password" id="password" placeholder="Password" class="w-full bg-slate-50 p-4 rounded-xl mb-6 font-bold text-sm">
+            
+            <button id="main-auth-btn" onclick="handleLogin()" class="w-full bg-[#091426] text-white py-3 rounded-xl font-bold text-sm mb-3">Login</button>
+            
+            <p class="text-xs text-center text-slate-400">
+                <span id="auth-switch-text">Don't have a shop?</span> 
+                <button onclick="toggleAuthMode()" id="auth-switch-btn" class="text-[#177DFE] font-bold hover:underline">Create One</button>
+            </p>
         </div>
     </div>
 
     <script>
-        const pLink = document.getElementById('privacy-link');
-        const pModal = document.getElementById('privacy-modal');
-        const pClose = document.getElementById('privacy-modal-close');
-        pLink.addEventListener('click', (e) => { e.preventDefault(); pModal.classList.add('modal-visible'); });
-        pClose.addEventListener('click', () => { pModal.classList.remove('modal-visible'); });
-        pModal.addEventListener('click', (e) => { if(e.target===pModal) pModal.classList.remove('modal-visible'); });
+        // CONFIG
+        var SUPABASE_URL = 'https://nnfsevthjkgmmjeuhstj.supabase.co'; // Paste URL
+        var SUPABASE_KEY = 'sb_publishable_wQNaFDaJviFeZJOD9UZgPg_9AuhOt_P'; // Paste Anon Key
+        var PAYSTACK_PUBLIC_KEY = 'pk_test_73823d1f12fd3d00d4634f58ebb6144ac7a9b0bd'; // Paste Paystack Key
+
+        var supabaseClient = null;
+        var isSupabaseReady = false;
+        var isLoginMode = true;
+
+        if (SUPABASE_URL && SUPABASE_KEY && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
+            try {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                isSupabaseReady = true;
+                checkUser();
+            } catch(e) { console.error(e); }
+        }
+
+        // VIEW & AUTH
+        function switchView(view) {
+            const buyer = document.getElementById('buyer-view');
+            const seller = document.getElementById('seller-view');
+            if (view === 'buyer') {
+                buyer.classList.remove('hidden');
+                seller.classList.add('hidden');
+                document.getElementById('mode-text').innerText = 'Buyer';
+                loadPublicMarket();
+            } else {
+                if (!isSupabaseReady) return alert("System needs keys!");
+                supabaseClient.auth.getUser().then(({ data: { user } }) => {
+                    if (user) {
+                        buyer.classList.add('hidden');
+                        seller.classList.remove('hidden');
+                        document.getElementById('mode-text').innerText = 'Seller';
+                        checkUser();
+                    } else {
+                        toggleModal();
+                    }
+                });
+            }
+        }
+
+        function toggleAppMode() {
+            const isSeller = document.getElementById('buyer-view').classList.contains('hidden');
+            switchView(isSeller ? 'buyer' : 'seller');
+        }
+
+        function toggleModal() { 
+            document.getElementById('auth-modal').classList.toggle('modal-visible');
+            if(document.getElementById('auth-modal').classList.contains('modal-visible')) {
+                isLoginMode = true;
+                updateAuthModalUI();
+            }
+        }
+
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            updateAuthModalUI();
+        }
+
+        function updateAuthModalUI() {
+            const signupFields = document.getElementById('signup-fields');
+            const title = document.getElementById('modal-title');
+            const mainBtn = document.getElementById('main-auth-btn');
+            const switchText = document.getElementById('auth-switch-text');
+            const switchBtn = document.getElementById('auth-switch-btn');
+
+            if (isLoginMode) {
+                signupFields.classList.add('hidden');
+                title.innerText = "Login";
+                mainBtn.innerText = "Login";
+                mainBtn.onclick = handleLogin;
+                switchText.innerText = "Don't have a shop?";
+                switchBtn.innerText = "Create One";
+            } else {
+                signupFields.classList.remove('hidden');
+                title.innerText = "Create Shop";
+                mainBtn.innerText = "Sign Up";
+                mainBtn.onclick = handleSignup;
+                switchText.innerText = "Already have a shop?";
+                switchBtn.innerText = "Login";
+            }
+        }
+
+        async function checkUser() {
+            if (!isSupabaseReady) return;
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            updateNavUI(user);
+            if (user) {
+                const shopName = user.user_metadata.shop_name || "DEXA Seller";
+                document.getElementById('seller-shop-name').innerText = shopName;
+                if (!document.getElementById('seller-view').classList.contains('hidden')) loadSellerProducts(user.id);
+            }
+        }
+
+        function updateNavUI(user) {
+            const container = document.getElementById('auth-buttons-desktop');
+            if (user) {
+                container.innerHTML = `<button onclick="switchView('seller')" class="text-sm font-bold text-emerald-600">Dashboard</button><button onclick="handleLogout()" class="text-sm font-bold text-slate-400 hover:text-red-500">Logout</button>`;
+            } else {
+                container.innerHTML = `<button onclick="toggleModal()" class="text-sm font-bold text-slate-600">Login</button><button onclick="toggleModal(); toggleAuthMode()" class="bg-[#091426] text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg">Start Selling</button>`;
+            }
+        }
+
+        async function handleSignup() {
+            const fullName = document.getElementById('full-name').value;
+            const phone = document.getElementById('phone').value;
+            const shopName = document.getElementById('shop-name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!fullName || !phone || !shopName || !email || !password) return alert("Fill all fields");
+
+            const { data, error } = await supabaseClient.auth.signUp({ 
+                email, password, options: { data: { full_name: fullName, phone: phone, shop_name: shopName } }
+            });
+
+            if (error) alert(error.message);
+            else if (data.session) {
+                alert("Shop created! Welcome " + shopName);
+                toggleModal();
+                checkUser();
+                switchView('seller');
+            } else {
+                alert("Check email for link!");
+                toggleModal();
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            if (!email || !password) return alert("Fill all fields");
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            if (error) alert(error.message);
+            else { toggleModal(); checkUser(); switchView('seller'); }
+        }
+
+        async function handleLogout() {
+            await supabaseClient.auth.signOut();
+            window.location.reload(true);
+        }
+
+        let uploadedUrl = null;
+        if (typeof uploadcare !== 'undefined') {
+            const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+            widget.onUploadComplete(info => { uploadedUrl = info.cdnUrl; });
+        }
+
+        async function handleUpload(e) {
+            e.preventDefault();
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            if (!user || !uploadedUrl) return alert("Missing info");
+            
+            const btn = document.getElementById('upload-btn');
+            btn.innerText = "Publishing...";
+            
+            const shopName = user.user_metadata.shop_name || "DEXA Seller";
+            const desc = document.getElementById('prod-desc').value || "No description";
+
+            const { error } = await supabaseClient.from('products').insert({
+                title: document.getElementById('prod-title').value,
+                price: document.getElementById('prod-price').value,
+                description: desc,
+                file_url: uploadedUrl,
+                seller_id: user.id,
+                seller_email: shopName 
+            });
+
+            if (error) alert(error.message);
+            else {
+                alert("Listed!");
+                const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+                widget.value(null);
+                loadSellerProducts(user.id);
+                loadPublicMarket();
+            }
+            btn.innerText = "Publish Product";
+        }
+
+        function buyProduct(title, price, fileUrl) {
+            const email = prompt("Enter your email for the receipt:");
+            if (!email) return;
+
+            if (!PAYSTACK_PUBLIC_KEY || PAYSTACK_PUBLIC_KEY.includes('YOUR')) return alert("Payment system offline.");
+
+            let handler = PaystackPop.setup({
+                key: PAYSTACK_PUBLIC_KEY,
+                email: email,
+                amount: price * 100,
+                currency: 'ZAR',
+                ref: '' + Math.floor((Math.random() * 1000000000) + 1), 
+                metadata: { custom_fields: [{ display_name: "Product", variable_name: "product", value: title }] },
+                callback: function(response) {
+                    alert('Payment successful! Reference: ' + response.reference);
+                    window.open(fileUrl, '_blank');
+                },
+                onClose: function() { alert('Transaction cancelled.'); }
+            });
+            handler.openIframe();
+        }
+
+        async function loadSellerProducts(uid) {
+            const { data } = await supabaseClient.from('products').select('*').eq('seller_id', uid);
+            const list = document.getElementById('seller-list');
+            list.innerHTML = "";
+            data.forEach(d => {
+                list.innerHTML += `<div class="bg-white p-4 rounded-2xl border border-slate-100 flex justify-between items-center"><span class="font-bold text-sm">${d.title}</span><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">R${d.price}</span></div>`;
+            });
+        }
+
+        async function loadPublicMarket() {
+            if (!isSupabaseReady) return;
+            const { data } = await supabaseClient.from('products').select('*').limit(12);
+            const grid = document.getElementById('public-product-grid');
+            
+            // CLEAR THE GRID FIRST so ghosts are gone
+            grid.innerHTML = "";
+            
+            if (data && data.length > 0) {
+                data.forEach(d => {
+                    const creator = d.seller_email || "Verified Seller";
+                    const description = d.description || "Digital Product";
+                    const displayDesc = description.length > 30 ? description.substring(0, 30) + '...' : description;
+                    const safeTitle = d.title.replace(/'/g, "\\'");
+                    
+                    grid.innerHTML += `
+                    <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm hover:shadow-lg transition-all cursor-pointer">
+                        <div class="h-32 bg-slate-50 rounded-2xl flex items-center justify-center mb-4"><i data-lucide="package" class="text-slate-300 w-10 h-10"></i></div>
+                        <h4 class="font-bold text-sm text-[#091426] line-clamp-1">${d.title}</h4>
+                        <p class="text-xs text-slate-400 mb-3">${displayDesc}</p>
+                        <div class="flex justify-between items-center"><span class="text-sm font-black text-[#091426]">R${d.price}</span>
+                        <button onclick="buyProduct('${safeTitle}', ${d.price}, '${d.file_url}')" class="bg-[#177DFE]/10 p-2 rounded-lg text-[#177DFE] hover:bg-[#177DFE] hover:text-white transition-colors"><i data-lucide="shopping-cart" class="w-4 h-4"></i></button></div></div>`;
+                });
+            } else {
+                grid.innerHTML = '<p class="text-slate-400 text-sm col-span-full text-center py-10">No products yet.</p>';
+            }
+            lucide.createIcons();
+        }
+
+        window.onload = () => { loadPublicMarket(); lucide.createIcons(); };
     </script>
 </body>
 </html>
