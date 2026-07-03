@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AERO WEB | Professional Web Development</title>
+<meta name="description" content="AERO WEB designs and builds premium, mobile-first websites for South African businesses. Fast, secure, and custom-coded.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #ffffff;
+    --bg-alt: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    --border: #e2e8f0;
+    --radius: 8px;
+    --font-main: 'Inter', sans-serif;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  img, svg { display: block; max-width: 100%; }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  
+  h1, h2, h3 {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text-main);
+  }
+
+  /* ---------- Nav ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .logo {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .logo .dot {
+    color: var(--primary);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .nav-links a { transition: color 0.2s ease; }
+  .nav-links a:hover { color: var(--primary); }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-primary:hover {
+    background: var(--primary-hover);
+    box-shadow: var(--shadow-md);
+  }
+  .btn-outline {
+    border-color: var(--border);
+    color: var(--text-main);
+    background: transparent;
+  }
+  .btn-outline:hover {
+    border-color: var(--text-muted);
+    background: var(--bg-alt);
+  }
+
+  .nav-cta { display: flex; align-items: center; }
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 96px 0;
+    background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg-main) 100%);
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 64px);
+    max-width: 800px;
+    margin: 0 auto 24px;
+  }
+  .hero h1 .accent { color: var(--primary); }
+  .hero p.lead {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- Trust Strip ---------- */
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .strip div {
+    padding: 0 16px;
+    border-right: 1px solid var(--border);
+  }
+  .strip div:last-child { border-right: none; }
+  .strip strong {
+    display: block;
+    color: var(--text-main);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .strip p {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* ---------- Section Shells ---------- */
+  section { padding: 96px 0; }
+  .section-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 56px;
+  }
+  .section-head h2 { font-size: clamp(32px, 4vw, 40px); margin-bottom: 16px; }
+  .section-head p { color: var(--text-muted); font-size: 16px; }
+
+  /* ---------- Pricing ---------- */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+  .price-card {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 32px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .price-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  .price-card.featured {
+    border: 2px solid var(--primary);
+    box-shadow: var(--shadow-md);
+    position: relative;
+  }
+  .badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .price-card h3 { font-size: 24px; margin-bottom: 8px; }
+  .price-card .desc { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; height: 42px; }
+  .price-card .price { font-size: 36px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+  .price-card .price span { font-size: 14px; font-weight: 500; color: var(--text-muted); }
+  
+  .features-list { margin: 24px 0 32px; flex-grow: 1; }
+  .features-list li {
+    font-size: 14px;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .features-list svg { color: var(--primary); flex-shrink: 0; width: 18px; height: 18px; }
+  
+  /* ---------- Process & Why Us Grid ---------- */
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+  }
+  .card .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+  .card h3 { font-size: 18px; margin-bottom: 12px; }
+  .card p { color: var(--text-muted); font-size: 14px; }
+
+  /* ---------- Contact ---------- */
+  .contact { background: var(--bg-alt); border-top: 1px solid var(--border); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .contact-info { margin-top: 32px; display: flex; flex-direction: column; gap: 24px; }
+  .contact-info-item { display: flex; flex-direction: column; gap: 4px; }
+  .contact-info-item .label { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+  .contact-info-item .value { font-size: 18px; font-weight: 600; color: var(--text-main); }
+
+  form {
+    background: var(--bg-main);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--text-main); }
+  .field input, .field textarea {
+    font-family: var(--font-main);
+    font-size: 15px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-main);
+    color: var(--text-main);
+    transition: all 0.2s ease;
+  }
+  .field textarea { min-height: 120px; resize: vertical; }
+  .field input:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: #0f172a;
+    color: #ffffff;
+    padding: 48px 0;
+  }
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-logo { font-weight: 800; font-size: 20px; }
+  .footer-logo .dot { color: var(--primary); }
+  .footer-links { display: flex; gap: 24px; font-size: 14px; color: #94a3b8; }
+  .footer-links a:hover { color: #ffffff; }
+  .footer-meta { font-size: 13px; color: #64748b; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .strip { grid-template-columns: repeat(2, 1fr); gap: 32px 0; }
+    .strip div:nth-child(2) { border-right: none; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  @media (max-width: 680px) {
+    .nav-links {
+      position: absolute;
+      top: 72px; left: 0; right: 0;
+      background: var(--bg-main);
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0;
+      border-bottom: 1px solid var(--border);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      box-shadow: var(--shadow-md);
+    }
+    .nav-links.open { max-height: 300px; }
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-cta { display: none; }
+    .menu-toggle { display: block; }
+    
+    .hero { padding: 64px 0; }
+    .hero h1 { font-size: 36px; }
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas .btn { width: 100%; }
+    
+    .grid-4 { grid-template-columns: 1fr; }
+    .strip { grid-template-columns: 1fr; border-right: none; }
+    .strip div { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+    .strip div:last-child { border-bottom: none; padding-bottom: 0; }
+    
+    form { padding: 24px; }
+    .footer-grid { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">AERO WEB<span class="dot">.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Get a Quote</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow" style="justify-content: center;">Premium Web Development</div>
+      <h1>Websites engineered to <span class="accent">perform.</span></h1>
+      <p class="lead">We design and build fast, secure, mobile-first websites for South African businesses. No bloat, no templates—just custom code that drives results.</p>
+      <div class="hero-ctas">
+        <a href="#pricing" class="btn btn-primary">View Packages</a>
+        <a href="https://wa.me/27834463426?text=Hi%20AERO%20WEB%2C%20I%27d%20like%20to%20get%20a%20quote%20for%20a%20website." target="_blank" rel="noopener" class="btn btn-outline">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip wrap">
+    <div>
+      <strong>3–10 Days</strong>
+      <p>Typical turnaround time</p>
+    </div>
+    <div>
+      <strong>100% Mobile-Ready</strong>
+      <p>Flawless on every device</p>
+    </div>
+    <div>
+      <strong>Direct Contact</strong>
+      <p>SA-based, no call centres</p>
+    </div>
+    <div>
+      <strong>From R3,500</strong>
+      <p>Fixed, transparent pricing</p>
+    </div>
+  </div>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="justify-content: center;">Transparent Pricing</div>
+        <h2>Choose your business runway.</h2>
+        <p>Fixed packages for standard needs, and a custom route for complex applications. No hidden fees or surprise invoices.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Card 1 -->
+        <div class="price-card">
+          <h3>The "Lite" Build</h3>
+          <p class="desc">Ideal for establishing a professional online presence quickly.</p>
+          <div class="price">R3,500 <span>once-off</span></div>
+          <ul class="features-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 1–3 Custom Pages</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Mobile Responsive Design</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Working Contact Form</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> WhatsApp Integration</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline" style="width: 100%;">Get Started</a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="price-card featured">
+          <div class="badge">Most Popular</div>
+          <h3>The "Professional"</h3>
+          <p class="desc">Built to convert traffic into leads for established businesses.</p>
+          <div class="price">R6,500+ <span>once-off</span></div>
+          <ul class="features-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 5–8 Custom Pages</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Premium Aesthetics</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Advanced Technical SEO</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copywriting Assistance</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Blog / News Integration</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="price-card">
+          <h3>Custom App</h3>
+          <p class="desc">E-commerce, SaaS, booking systems, or complex data portals.</p>
+          <div class="price">Custom <span>quoted per project</span></div>
+          <ul class="features-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Advanced Architecture</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Payment Gateways</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Database Management</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Third-Party API Integrations</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline" style="width: 100%;">Request Quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" style="background: var(--bg-alt);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="justify-content: center;">How It Works</div>
+        <h2>A streamlined process.</h2>
+      </div>
+      <div class="grid-4">
+        <div class="card">
+          <div class="num">1</div>
+          <h3>Discover</h3>
+          <p>A quick chat to understand your business, your audience, and exact requirements.</p>
+        </div>
+        <div class="card">
+          <div class="num">2</div>
+          <h3>Design</h3>
+          <p>We create a high-fidelity mockup tailored to your brand identity.</p>
+        </div>
+        <div class="card">
+          <div class="num">3</div>
+          <h3>Develop</h3>
+          <p>Clean, hard-coded development optimized for extreme speed and security.</p>
+        </div>
+        <div class="card">
+          <div class="num">4</div>
+          <h3>Deploy</h3>
+          <p>Rigorous testing followed by a seamless launch onto your chosen domain.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <div class="eyebrow">Get In Touch</div>
+        <h2>Let's build something exceptional.</h2>
+        <p style="color:var(--text-muted); margin-top:16px;">Whether you need a simple landing page or a complex web application, let's discuss your technical requirements.</p>
+        
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <span class="label">Email</span>
+            <span class="value">glenmodiba@outlook.com</span>
+          </div>
+          <div class="contact-info-item">
+            <span class="label">WhatsApp</span>
+            <span class="value">+27 83 446 3426</span>
+          </div>
+          <div class="contact-info-item">
+            <span class="label">Direct Line</span>
+            <span class="value">078 454 1712</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form id="contactForm">
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="field">
+            <label for="email">Work Email</label>
+            <input type="email" id="email" name="email" placeholder="john@company.co.za" required>
+          </div>
+          <div class="field">
+            <label for="message">Project Details</label>
+            <textarea id="message" name="message" placeholder="Briefly describe your business and technical needs..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Submit Inquiry</button>
+          <a href="#" id="waSend" class="btn btn-outline" style="width: 100%; text-align: center;">Chat via WhatsApp Instead</a>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="footer-logo">AERO WEB<span class="dot">.</span></div>
+    <ul class="footer-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="footer-meta">© 2026 Aero Web Studio. operated by Ratio Capital Holdings, RSA.</div>
+  </div>
+</footer>
+
+<script>
+  // Mobile Menu Toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  
+  // Close menu when clicking a link
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // Form handling
+  const form = document.getElementById('contactForm');
+  const waSend = document.getElementById('waSend');
+
+  function buildMessage(){
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    return { name, email, message };
+  }
+
+  // Email Submit
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const { name, email, message } = buildMessage();
+    const subject = encodeURIComponent(`New Project Inquiry from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nProject Details:\n${message}`);
+    window.location.href = `mailto:glenmodiba@outlook.com?subject=${subject}&body=${body}`;
+  });
+
+  // WhatsApp Submit
+  waSend.addEventListener('click', (e) => {
+    e.preventDefault();
+    const { name, email, message } = buildMessage();
+    const text = encodeURIComponent(`Hi Aero Web Studio,\n\nI'm ${name || '[Name]'} (${email || '[Email]'}).\n\n${message || 'I would like to request a quote for a new website project.'}`);
+    window.open(`https://wa.me/27834463426?text=${text}`, '_blank');
+  });
+</script>
+
+</body>
+</html>
