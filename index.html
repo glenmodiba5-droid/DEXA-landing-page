@@ -1,346 +1,661 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1PZSWRG5SE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-1PZSWRG5SE');
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AERO WEB | Professional Web Development</title>
+<meta name="description" content="AERO WEB designs and builds premium, mobile-first websites for South African businesses. Fast, secure, and custom-coded.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #ffffff;
+    --bg-alt: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    --border: #e2e8f0;
+    --radius: 8px;
+    --font-main: 'Inter', sans-serif;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEXA - Digital Exchange Area</title>
-    <meta name="description" content="South Africa's first digital marketplace. Buy & sell e-books, SaaS kits, and templates in ZAR. 12% flat fee.">
-    
-    <link rel="icon" type="image/png" href="assets/dexa_logo_final.png">
-    
-    <meta property="og:image" content="https://www.dexamarket.co.za/assets/dexa_logo_final.png">
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "DEXA",
-      "url": "https://www.dexamarket.co.za/",
-      "logo": "https://www.dexamarket.co.za/assets/dexa_logo_final.png",
-      "sameAs": [
-        "https://www.linkedin.com/company/dexa-sa",
-        "https://www.tiktok.com/@dexa_sa",
-        "https://twitter.com/dexa_sa",
-        "https://www.instagram.com/dexa_sa"
-      ]
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  img, svg { display: block; max-width: 100%; }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  
+  h1, h2, h3 {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text-main);
+  }
+
+  /* ---------- Nav ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .logo {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .logo .dot {
+    color: var(--primary);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .nav-links a { transition: color 0.2s ease; }
+  .nav-links a:hover { color: var(--primary); }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-primary:hover {
+    background: var(--primary-hover);
+    box-shadow: var(--shadow-md);
+  }
+  .btn-outline {
+    border-color: var(--border);
+    color: var(--text-main);
+    background: transparent;
+  }
+  .btn-outline:hover {
+    border-color: var(--text-muted);
+    background: var(--bg-alt);
+  }
+
+  .nav-cta { display: flex; align-items: center; }
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 96px 0;
+    background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg-main) 100%);
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 64px);
+    max-width: 800px;
+    margin: 0 auto 24px;
+  }
+  .hero h1 .accent { color: var(--primary); }
+  .hero p.lead {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- Trust Strip ---------- */
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .strip div {
+    padding: 0 16px;
+    border-right: 1px solid var(--border);
+  }
+  .strip div:last-child { border-right: none; }
+  .strip strong {
+    display: block;
+    color: var(--text-main);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .strip p {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* ---------- Section Shells ---------- */
+  section { padding: 96px 0; }
+  .section-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 56px;
+  }
+  .section-head h2 { font-size: clamp(32px, 4vw, 40px); margin-bottom: 16px; }
+  .section-head p { color: var(--text-muted); font-size: 16px; }
+
+  /* ---------- Pricing ---------- */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+  .price-card {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 32px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .price-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  .price-card.featured {
+    border: 2px solid var(--primary);
+    box-shadow: var(--shadow-md);
+    position: relative;
+  }
+  .badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .price-card h3 { font-size: 24px; margin-bottom: 8px; }
+  .price-card .desc { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; height: 42px; }
+  .price-card .price { font-size: 36px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+  .price-card .price span { font-size: 14px; font-weight: 500; color: var(--text-muted); }
+  
+  .features-list { margin: 24px 0 32px; flex-grow: 1; }
+  .features-list li {
+    font-size: 14px;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .features-list svg { color: var(--primary); flex-shrink: 0; width: 18px; height: 18px; }
+  
+  /* ---------- Process & Why Us Grid ---------- */
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+  }
+  .card .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+  .card h3 { font-size: 18px; margin-bottom: 12px; }
+  .card p { color: var(--text-muted); font-size: 14px; }
+
+  /* ---------- Contact ---------- */
+  .contact { background: var(--bg-alt); border-top: 1px solid var(--border); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .contact-info { margin-top: 32px; display: flex; flex-direction: column; gap: 24px; }
+  .contact-info-item { display: flex; flex-direction: column; gap: 4px; }
+  .contact-info-item .label { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+  .contact-info-item .value { font-size: 18px; font-weight: 600; color: var(--text-main); }
+
+  form {
+    background: var(--bg-main);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--text-main); }
+  .field input, .field textarea {
+    font-family: var(--font-main);
+    font-size: 15px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-main);
+    color: var(--text-main);
+    transition: all 0.2s ease;
+  }
+  .field textarea { min-height: 120px; resize: vertical; }
+  .field input:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: #0f172a;
+    color: #ffffff;
+    padding: 48px 0;
+  }
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-logo { font-weight: 800; font-size: 20px; }
+  .footer-logo .dot { color: var(--primary); }
+  .footer-links { display: flex; gap: 24px; font-size: 14px; color: #94a3b8; }
+  .footer-links a:hover { color: #ffffff; }
+  .footer-meta { font-size: 13px; color: #64748b; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .strip { grid-template-columns: repeat(2, 1fr); gap: 32px 0; }
+    .strip div:nth-child(2) { border-right: none; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  @media (max-width: 680px) {
+    .nav-links {
+      position: absolute;
+      top: 72px; left: 0; right: 0;
+      background: var(--bg-main);
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0;
+      border-bottom: 1px solid var(--border);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      box-shadow: var(--shadow-md);
     }
-    </script>
+    .nav-links.open { max-height: 300px; }
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-cta { display: none; }
+    .menu-toggle { display: block; }
     
-    <style>
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; }
-        .hero-gradient { background: linear-gradient(120deg, #f0fdf4 0%, #fdf2f8 100%); }
-        .cta-gradient { background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%); }
-        .cta-gradient:hover { background: linear-gradient(90deg, #059669 0%, #0891b2 100%); }
-        .lucide-icon { width: 24px; height: 24px; stroke-width: 2; }
-        
-        /* Privacy Modal Styles */
-        .modal-backdrop {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6); display: flex;
-            align-items: center; justify-content: center; z-index: 50;
-            opacity: 0; visibility: hidden; transition: all 0.3s ease;
-        }
-        .modal-visible { opacity: 1; visibility: visible; }
-        .modal-content {
-            background-color: white; padding: 2rem; border-radius: 0.75rem;
-            width: 90%; max-width: 600px; transform: translateY(-20px);
-            transition: transform 0.3s ease; max-height: 80vh; overflow-y: auto;
-        }
-        .modal-visible .modal-content { transform: translateY(0); }
-    </style>
+    .hero { padding: 64px 0; }
+    .hero h1 { font-size: 36px; }
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas .btn { width: 100%; }
+    
+    .grid-4 { grid-template-columns: 1fr; }
+    .strip { grid-template-columns: 1fr; border-right: none; }
+    .strip div { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+    .strip div:last-child { border-bottom: none; padding-bottom: 0; }
+    
+    form { padding: 24px; }
+    .footer-grid { flex-direction: column; align-items: flex-start; }
+  }
+</style>
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body>
 
-    <header class="absolute top-0 left-0 w-full z-10 py-5 px-4 sm:px-6 lg:px-8">
-        <nav class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <a href="#" class="flex items-center space-x-2">
-                    <img src="assets/dexa_logo_final.png?v=100" alt="DEXA Logo" class="h-24 md:h-32 w-auto object-contain">
-                </a>
-                <span class="ml-2 mt-1 text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">BETA</span>
-            </div>
-            
-            <div class="flex items-center gap-6">
-                <a href="#join" class="hidden md:inline-block text-sm font-semibold text-gray-500 hover:text-emerald-600 transition-colors">
-                    Claim your spot
-                </a>
-                <a href="#!" data-tally-open="w2qNyM" data-tally-layout="modal" data-tally-width="500" data-tally-emoji-text="👋" data-tally-emoji-animation="wave" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-800 transition-colors">
-                    Become a Seller
-                </a>
-            </div>
-        </nav>
-    </header>
-
-    <main class="relative overflow-hidden">
-        <section class="hero-gradient pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-48 lg:pb-36">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-center lg:text-left">
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900">
-                        The Marketplace for <span class="block text-emerald-600">Africa's Digital Creators.</span>
-                    </h1>
-                    <p class="mt-6 text-lg sm:text-xl text-gray-700 max-w-lg mx-auto lg:mx-0">
-                        Sell your templates, e-books, SaaS kits, and audio on DEXA. No monthly fees. Direct ZAR payouts.
-                    </p>
-                    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="#!" data-tally-open="w2qNyM" data-tally-layout="modal" class="w-full sm:w-auto cta-gradient text-white px-8 py-3.5 rounded-lg text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center">
-                            Claim Your Spot
-                            <svg class="lucide-icon ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </a>
-                        <a href="#how-it-works" class="w-full sm:w-auto bg-white text-gray-900 px-8 py-3.5 rounded-lg text-base font-semibold shadow-md hover:bg-gray-50 transition-colors border border-gray-200 flex items-center justify-center">
-                            How it Works
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="relative">
-                    <div class="bg-white p-4 rounded-2xl shadow-2xl transform rotate-3">
-                        <div class="aspect-w-16 aspect-h-10">
-                            <img src="https://placehold.co/600x400/10b981/ffffff?text=Your+Product+Here&font=inter" alt="Digital Product Example" class="rounded-lg object-cover">
-                        </div>
-                        <div class="mt-3 flex justify-between items-center">
-                            <div>
-                                <h3 class="font-semibold text-lg">SaaS Starter Kit</h3>
-                                <p class="text-sm text-gray-600">by @TechFounder</p>
-                            </div>
-                            <span class="font-bold text-xl text-emerald-600">R500</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="how-it-works" class="py-16 bg-white border-b border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-extrabold text-gray-900">How to Become a Seller</h2>
-                    <p class="mt-4 text-lg text-gray-600">Start your digital business in 3 simple steps.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="text-center">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold mb-4">1</div>
-                        <h3 class="text-xl font-bold text-gray-900">Join the Waitlist</h3>
-                        <p class="mt-2 text-gray-600">Secure your spot as a Founding Seller. Get 3 months commission-free.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold mb-4">2</div>
-                        <h3 class="text-xl font-bold text-gray-900">Upload Your Products</h3>
-                        <p class="mt-2 text-gray-600">Prepare your PDFs, Zips, or Audio files. We handle the hosting and delivery.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold mb-4">3</div>
-                        <h3 class="text-xl font-bold text-gray-900">Get Paid in ZAR</h3>
-                        <p class="mt-2 text-gray-600">Receive payouts directly to your South African bank account via Paystack/Yoco.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-base font-semibold text-emerald-600 tracking-wide uppercase">What You Can Sell</h2>
-                    <p class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">
-                        From Prompts to Code
-                    </p>
-                </div>
-                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    
-                    <div class="relative group bg-slate-900 rounded-xl p-6 text-center transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-400/50">
-                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
-                            Golden Feature
-                        </div>
-                        <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-slate-700 transition-colors">
-                            <i data-lucide="code-2" class="lucide-icon text-yellow-400"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-white">SaaS Starter Kits</h3>
-                        <p class="mt-1 text-sm text-slate-400">Sell pre-built codebases (Next.js, Python) integrated with Paystack & Yoco. The "Mzansi Stack".</p>
-                    </div>
-
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-emerald-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-emerald-100 transition-colors">
-                            <i data-lucide="layout-template" class="lucide-icon text-emerald-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">Templates</h3>
-                        <p class="mt-1 text-sm text-gray-600">Notion, Canva, CVs, Webflow, Invoices</p>
-                    </div>
-
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-pink-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-pink-100 transition-colors">
-                            <i data-lucide="book-open" class="lucide-icon text-pink-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">E-books</h3>
-                        <p class="mt-1 text-sm text-gray-600">Study Guides, Poetry, Storytelling, How-To's</p>
-                    </div>
-
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-indigo-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-indigo-100 transition-colors">
-                            <i data-lucide="image" class="lucide-icon text-indigo-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">Digital Art</h3>
-                        <p class="mt-1 text-sm text-gray-600">Printable Posters, Wallpapers, Illustrations</p>
-                    </div>
-
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-cyan-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-cyan-100 transition-colors">
-                            <i data-lucide="calendar-check" class="lucide-icon text-cyan-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">Planners</h3>
-                        <p class="mt-1 text-sm text-gray-600">Budget Trackers, Year Planners, School Kits</p>
-                    </div>
-
-                    <div class="group bg-gray-50 rounded-xl p-6 text-center transition-all duration-300 hover:bg-amber-50 hover:shadow-lg transform hover:-translate-y-1">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-md group-hover:bg-amber-100 transition-colors">
-                            <i data-lucide="music" class="lucide-icon text-amber-600"></i>
-                        </div>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-900">Audio</h3>
-                        <p class="mt-1 text-sm text-gray-600">Beats, Loops, Meditations, Podcasts</p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="py-20 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="lg:text-center">
-                    <h2 class="text-base font-semibold text-emerald-600 tracking-wide uppercase">Why Choose DEXA?</h2>
-                    <p class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">Built for Exposure & Profit</p>
-                </div>
-
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-10">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
-                            <i data-lucide="monitor" class="lucide-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900">The 2-Hour Billboard</h3>
-                        <p class="mt-2 text-gray-600">
-                            We rotate 10 new creators on our homepage <strong>every 2 hours</strong>. Get featured in the spotlight for free, just by listing high-quality products.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
-                            <i data-lucide="percent" class="lucide-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900">12% Flat Fee</h3>
-                        <p class="mt-2 text-gray-600">
-                            Stop losing 30% to international platforms. We charge a simple 12% commission. No monthly fees. No hidden costs.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
-                            <i data-lucide="code-2" class="lucide-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900">SaaS Starter Kits</h3>
-                        <p class="mt-2 text-gray-600">
-                            Buy and sell "Mzansi-Ready" codebases with Paystack/Yoco and POPIA compliance pre-installed.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="join" class="relative cta-gradient py-20 text-center text-white">
-            <div class="max-w-4xl mx-auto px-4">
-                <span class="bg-white/20 text-white px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-6 inline-block border border-white/30">
-                    ⏳ Limited to 100 Founding Sellers
-                </span>
-                <h2 class="text-4xl md:text-5xl font-extrabold mt-4 tracking-tight">Claim Your 3 Months Free.</h2>
-                <p class="mt-5 text-lg text-emerald-50 max-w-2xl mx-auto font-medium">Stop giving away 30% of your revenue to US platforms. Lock in your zero-commission status before we officially launch.</p>
-                
-                <button type="button" data-tally-open="w2qNyM" data-tally-layout="modal" data-tally-width="500" data-tally-emoji-text="🚀" data-tally-emoji-animation="wave" class="mt-8 bg-gray-900 text-white px-10 py-4 rounded-xl text-lg font-bold shadow-2xl hover:bg-black transition-transform transform hover:scale-105 flex items-center justify-center mx-auto gap-2">
-                    Claim My Spot 
-                    <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"></path></svg>
-                </button>
-                
-                <p class="text-xs text-white/80 mt-6 font-bold tracking-wide">
-                    🔒 Takes 10 seconds. 100% POPIA Compliant.
-                </p>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-gray-900 text-gray-400 py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p>&copy; 2026 DEXA. A Division of Ratio Capital Holdings (Pty) Ltd. Reg No: [2026/217968/07]</p>
-            <div class="mt-4 space-x-4 text-sm">
-                <a href="#!" id="privacy-link" class="hover:text-white">Privacy Policy</a>
-            </div>
-        </div>
-    </footer>
-
-    <script async src="https://tally.so/widgets/embed.js"></script>
-    <script>lucide.createIcons();</script>
-
-    <div id="privacy-modal" class="modal-backdrop">
-        <div class="modal-content text-left">
-            <div class="flex justify-between items-center mb-6 border-b pb-4">
-                <h3 class="text-2xl font-bold text-gray-900">Privacy & Waitlist Terms</h3>
-                <button id="privacy-modal-close" class="text-gray-500 hover:text-black transition-colors">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-            
-            <div class="prose prose-sm prose-slate max-w-none text-gray-600 overflow-y-auto max-h-[60vh] pr-2">
-                
-                <h4 class="text-lg font-bold text-gray-900 mb-2">1. The "Founding Seller" Offer</h4>
-                <p class="mb-4">
-                    By joining the waitlist before our official public launch, you are eligible for the <strong>"Founding Seller"</strong> status. This grants you:
-                </p>
-                <ul class="list-disc pl-5 mb-4 space-y-1">
-                    <li><strong>3 Months Commission-Free Selling:</strong> DEXA will waive its standard 12% platform fee for 90 days starting from the day your seller account is activated.</li>
-                    <li><strong>Note on Banking Fees:</strong> While DEXA will not charge a fee, standard payment processing fees charged by our banking partners (Paystack/Yoco) may still apply to transactions.</li>
-                    <li><strong>Eligibility:</strong> This offer is exclusive to email addresses registered on our waitlist prior to Launch Day.</li>
-                </ul>
-
-                <hr class="my-6 border-gray-200">
-
-                <h4 class="text-lg font-bold text-gray-900 mb-2">2. Privacy Policy</h4>
-                <p class="mb-2"><strong>Data Collection:</strong> We collect your email address and name solely for the purpose of notifying you about the DEXA launch, onboarding you as a seller, and potential partnership opportunities.</p>
-                
-                <p class="mb-2"><strong>How We Use Data:</strong></p>
-                <ul class="list-disc pl-5 mb-4 space-y-1">
-                    <li>To send your "Founding Seller" invite.</li>
-                    <li>To communicate platform updates.</li>
-                    <li>We do <strong>not</strong> sell your data to third parties.</li>
-                </ul>
-
-                <p class="mb-2"><strong>Third-Party Services:</strong></p>
-                <ul class="list-disc pl-5 mb-4 space-y-1">
-                    <li><strong>Tally:</strong> We use Tally.so to securely collect your application forms.</li>
-                    <li><strong>Google Analytics:</strong> We use cookies to understand how visitors interact with our landing page to improve the experience.</li>
-                </ul>
-
-                <h4 class="text-lg font-bold text-gray-900 mb-2">3. Contact</h4>
-                <p>
-                    DEXA is proudly built in South Africa. If you have questions about your data or these terms, please contact us directly at: <a href="mailto:support@dexamarket.co.za" class="text-emerald-600 hover:underline">support@dexamarket.co.za</a>
-                </p>
-            </div>
-        </div>
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">AERO WEB<span class="dot">.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Get a Quote</a>
     </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </div>
+</header>
 
-    <script>
-        const pLink = document.getElementById('privacy-link');
-        const pModal = document.getElementById('privacy-modal');
-        const pClose = document.getElementById('privacy-modal-close');
-        pLink.addEventListener('click', (e) => { e.preventDefault(); pModal.classList.add('modal-visible'); });
-        pClose.addEventListener('click', () => { pModal.classList.remove('modal-visible'); });
-        pModal.addEventListener('click', (e) => { if(e.target===pModal) pModal.classList.remove('modal-visible'); });
-    </script>
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow" style="justify-content: center;">Premium Web Development</div>
+      <h1>Websites engineered to <span class="accent">perform.</span></h1>
+      <p class="lead">We design and build fast, secure, mobile-first websites for South African businesses. No bloat, no templates—just custom code that drives results.</p>
+      <div class="hero-ctas">
+        <a href="#pricing" class="btn btn-primary">View Packages</a>
+        <a href="https://wa.me/27834463426?text=Hi%20AERO%20WEB%2C%20I%27d%20like%20to%20get%20a%20quote%20for%20a%20website." target="_blank" rel="noopener" class="btn btn-outline">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip wrap">
+    <div>
+      <strong>3–10 Days</strong>
+      <p>Typical turnaround time</p>
+    </div>
+    <div>
+      <strong>100% Mobile-Ready</strong>
+      <p>Flawless on every device</p>
+    </div>
+    <div>
+      <strong>Direct Contact</strong>
+      <p>SA-based, no call centres</p>
+    </div>
+    <div>
+      <strong>From R3,500</strong>
+      <p>Fixed, transparent pricing</p>
+    </div>
+  </div>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="justify-content: center;">Transparent Pricing</div>
+        <h2>Choose your business runway.</h2>
+        <p>Fixed packages for standard needs, and a custom route for complex applications. No hidden fees or surprise invoices.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Card 1 -->
+        <div class="price-card">
+          <h3>The "Lite" Build</h3>
+          <p class="desc">Ideal for establishing a professional online presence quickly.</p>
+          <div class="price">R3,500 <span>once-off</span></div>
+          <ul class="features-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 1–3 Custom Pages</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Mobile Responsive Design</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Working Contact Form</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> WhatsApp Integration</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline" style="width: 100%;">Get Started</a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="price-card featured">
+          <div class="badge">Most Popular</div>
+          <h3>The "Professional"</h3>
+          <p class="desc">Built to convert traffic into leads for established businesses.</p>
+          <div class="price">R6,500+ <span>once-off</span></div>
+          <ul class="features-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 5–8 Custom Pages</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Premium Aesthetics</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Advanced Technical SEO</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copywriting Assistance</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Blog / News Integration</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="price-card">
+          <h3>Custom App</h3>
+          <p class="desc">E-commerce, SaaS, booking systems, or complex data portals.</p>
+          <div class="price">Custom <span>quoted per project</span></div>
+          <ul class="features-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Advanced Architecture</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Payment Gateways</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Database Management</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Third-Party API Integrations</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline" style="width: 100%;">Request Quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" style="background: var(--bg-alt);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="justify-content: center;">How It Works</div>
+        <h2>A streamlined process.</h2>
+      </div>
+      <div class="grid-4">
+        <div class="card">
+          <div class="num">1</div>
+          <h3>Discover</h3>
+          <p>A quick chat to understand your business, your audience, and exact requirements.</p>
+        </div>
+        <div class="card">
+          <div class="num">2</div>
+          <h3>Design</h3>
+          <p>We create a high-fidelity mockup tailored to your brand identity.</p>
+        </div>
+        <div class="card">
+          <div class="num">3</div>
+          <h3>Develop</h3>
+          <p>Clean, hard-coded development optimized for extreme speed and security.</p>
+        </div>
+        <div class="card">
+          <div class="num">4</div>
+          <h3>Deploy</h3>
+          <p>Rigorous testing followed by a seamless launch onto your chosen domain.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <div class="eyebrow">Get In Touch</div>
+        <h2>Let's build something exceptional.</h2>
+        <p style="color:var(--text-muted); margin-top:16px;">Whether you need a simple landing page or a complex web application, let's discuss your technical requirements.</p>
+        
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <span class="label">Email</span>
+            <span class="value">glenmodiba@outlook.com</span>
+          </div>
+          <div class="contact-info-item">
+            <span class="label">WhatsApp</span>
+            <span class="value">+27 83 446 3426</span>
+          </div>
+          <div class="contact-info-item">
+            <span class="label">Direct Line</span>
+            <span class="value">078 454 1712</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form id="contactForm">
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="field">
+            <label for="email">Work Email</label>
+            <input type="email" id="email" name="email" placeholder="john@company.co.za" required>
+          </div>
+          <div class="field">
+            <label for="message">Project Details</label>
+            <textarea id="message" name="message" placeholder="Briefly describe your business and technical needs..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Submit Inquiry</button>
+          <a href="#" id="waSend" class="btn btn-outline" style="width: 100%; text-align: center;">Chat via WhatsApp Instead</a>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="footer-logo">AERO WEB<span class="dot">.</span></div>
+    <ul class="footer-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="footer-meta">© 2026 Aero Web Studio. operated by Ratio Capital Holdings, RSA.</div>
+  </div>
+</footer>
+
+<script>
+  // Mobile Menu Toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  
+  // Close menu when clicking a link
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // Form handling
+  const form = document.getElementById('contactForm');
+  const waSend = document.getElementById('waSend');
+
+  function buildMessage(){
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    return { name, email, message };
+  }
+
+  // Email Submit
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const { name, email, message } = buildMessage();
+    const subject = encodeURIComponent(`New Project Inquiry from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nProject Details:\n${message}`);
+    window.location.href = `mailto:glenmodiba@outlook.com?subject=${subject}&body=${body}`;
+  });
+
+  // WhatsApp Submit
+  waSend.addEventListener('click', (e) => {
+    e.preventDefault();
+    const { name, email, message } = buildMessage();
+    const text = encodeURIComponent(`Hi Aero Web Studio,\n\nI'm ${name || '[Name]'} (${email || '[Email]'}).\n\n${message || 'I would like to request a quote for a new website project.'}`);
+    window.open(`https://wa.me/27834463426?text=${text}`, '_blank');
+  });
+</script>
+
 </body>
 </html>
